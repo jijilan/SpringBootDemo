@@ -15,17 +15,28 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
     private static final String ERROR_PATH = "/error";
 
     @RequestMapping(value = ERROR_PATH)
-    public ResultView handleError(HttpServletResponse response) {
+    public ResultView handleError(HttpServletResponse response,HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
         log.info("请求错误:{}",response.getStatus());
-        if (response.getStatus()==401){
+        log.info("请求IP是:{}",ip);
+        if (response.getStatus() == ResultEnum.CODE_401.getCode()){
             return ResultView.error(ResultEnum.CODE_401);
-        }else if (response.getStatus()==403){
+        }else if (response.getStatus()== ResultEnum.CODE_403.getCode()){
             return ResultView.error(ResultEnum.CODE_403);
-        }else if (response.getStatus()==404){
+        }else if (response.getStatus()== ResultEnum.CODE_404.getCode()){
             return ResultView.error(ResultEnum.CODE_404);
-        }else if (response.getStatus()==405){
+        }else if (response.getStatus()== ResultEnum.CODE_405.getCode()){
             return ResultView.error(ResultEnum.CODE_405);
-        }else if (response.getStatus()==415){
+        }else if (response.getStatus()== ResultEnum.CODE_415.getCode()){
             return ResultView.error(ResultEnum.CODE_415);
         }
         return ResultView.error(ResultEnum.CODE_9999);

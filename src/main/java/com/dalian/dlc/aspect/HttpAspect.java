@@ -35,8 +35,6 @@ public class HttpAspect {
         log.info("Url={}",request.getRequestURL());
         //method
         log.info("Method={}",request.getMethod());
-        //ip
-        log.info("IP={}",request.getRemoteAddr());
         //class_method
         log.info("Controller={}",joinPoint.getSignature().getDeclaringTypeName() + "," + joinPoint.getSignature().getName());
         //args[]
