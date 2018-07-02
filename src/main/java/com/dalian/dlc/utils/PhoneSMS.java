@@ -3,7 +3,6 @@ package com.dalian.dlc.utils;
 import com.dalian.dlc.exception.MyException;
 import com.dalian.dlc.pay.wx.tool.MD5Util;
 import com.dalian.dlc.result.ResultEnum;
-import com.dalian.dlc.result.ResultStatus;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,11 +15,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static com.dalian.dlc.utils.LotteryUtil.getRandomString;
 
 
 public class PhoneSMS {
@@ -34,14 +28,14 @@ public class PhoneSMS {
 	 * @return
 	 */
 	public static int sendSMS(String  messageContent, String phone){
-		String dateTime=LotteryUtil.getdata("yyyyMMddHHmmss");
+		String dateTime=DateUtils.getCurrentDateTime("yyyyMMddHHmmss");
 		RestTemplate restTemplate=new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
 		params.add("username", "wzrc888hy");
 		params.add("password", MD5Util.MD5Encode(MD5Util.MD5Encode("IgwSF2", "utf-8") + dateTime, "utf-8"));
-		params.add("tkey", LotteryUtil.getdata("yyyyMMddHHmmss"));
+		params.add("tkey", dateTime);
 		params.add("mobile", phone);
 		params.add("content", messageContent);
 		try {
@@ -73,10 +67,13 @@ public class PhoneSMS {
 	public static int sendSMSGet(String Mobile, String Content, String send_time)
 			throws MalformedURLException, UnsupportedEncodingException {
 		URL url = null;
-		String CorpID = "wzrc888hy";// 账户名
-		String Pwd = "IgwSF2";// 密码
+		// 账户名
+		String CorpID = "wzrc888hy";
+		// 密码
+		String Pwd = "IgwSF2";
+		// 发送内容
 		String send_content = URLEncoder.encode(
-				Content.replaceAll("<br/>", " "), "GBK");// 发送内容
+				Content.replaceAll("<br/>", " "), "GBK");
 		url = new URL("http://www.ztsms.cn/sendNSms.do?username="
 				+ CorpID + "&password=" + Pwd + "&tkey="+ send_time+"mobile=" + Mobile + "&content="
 				+ send_content+"&productid="+"dalian");//
@@ -115,11 +112,13 @@ public class PhoneSMS {
 		int value = -2;
 		DataOutputStream out = null;
 		InputStream in = null;
-
-		String CorpID = "wzrc888hy";// 账户名
-		String Pwd = "IgwSF2";// 密码
+		// 账户名
+		String CorpID = "wzrc888hy";
+		// 密码
+		String Pwd = "IgwSF2";
+		// 发送内容
 		String send_content = URLEncoder.encode(
-				Content.replaceAll("<br/>", " "), "GBK");// 发送内容
+				Content.replaceAll("<br/>", " "), "GBK");
 
 		String strUrl = "http://sdk2.028lk.com:9880/sdk2/BatchSend2.aspx";
 		String param = "CorpID=" + CorpID + "&Pwd=" + Pwd + "&Mobile=" + Mobile

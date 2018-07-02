@@ -26,14 +26,14 @@ public class KdniaoTrackQueryAPI {
 			e.printStackTrace();
 		}
 	}
-	
-	//电商ID
+
+	/**电商ID*/
 	private String EBusinessID="test1356377";
-	//电商加密私钥，快递鸟提供，注意保管，不要泄漏
+	/**电商加密私钥，快递鸟提供，注意保管，不要泄漏*/
 	private String AppKey="e9d53bd3-3684-4086-b872-8053a3066e87";
-	//请求url
+	/**正式请求url*/
 	private String ReqURL="http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
-	//测试url
+	/**测试环境url*/
  	private String ReqURL_TEST="http://sandboxapi.kdniao.cc:8080/kdniaosandbox/gateway/exterfaceInvoke.json";
 	/**
      * Json方式 查询订单物流轨迹

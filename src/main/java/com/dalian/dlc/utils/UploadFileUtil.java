@@ -29,8 +29,9 @@ public class UploadFileUtil {
     public static  final String PATH_IMG="uploads/";
     public static String base64Upload(String attach,String path) throws MyException {
         log.info("path================{}",path);
-        if (attach == null) //图像数据为空
+        if (attach == null) {
             throw new MyException(ResultEnum.CODE_5);
+        }
         //检查目录是否存在
         checkDirectories(path);
 
@@ -74,7 +75,7 @@ public class UploadFileUtil {
                     String oldFileName = attach[i].getOriginalFilename();
                     log.info("获取原文件名：{}", oldFileName);
                     // 获取原文件名的后缀
-                    String prefix = FilenameUtils.getExtension(oldFileName);// 原文件后缀
+                    String prefix = FilenameUtils.getExtension(oldFileName);
                     int filesize = 50000000;
                     // 上传大小不得超过 500k
                     log.info("第"+(i+1)+"张图片的大小:"+ attach[i].getSize());
@@ -82,7 +83,8 @@ public class UploadFileUtil {
                         log.info("上传大小不能超过5M");
                         throw new MyException(ResultEnum.CODE_7);
                     } else if (prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png")
-                            || prefix.equalsIgnoreCase("jpeg") || prefix.equalsIgnoreCase("pneg")) {// 上传图片格式不正确
+                            || prefix.equalsIgnoreCase("jpeg") || prefix.equalsIgnoreCase("pneg")
+                            || prefix.equalsIgnoreCase("webp")) {
                         // 新的照片名称，毫秒数加随机数，确保不能重复
                         String fileName = System.currentTimeMillis() + RandomUtils.nextInt(1000000, 5000000)
                                 + ".jpg";
