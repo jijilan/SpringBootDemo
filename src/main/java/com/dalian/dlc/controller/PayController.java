@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.*;
-
+/**
+ * @Author: liujiebang
+ * @Description: 支付
+ * @Date: 2018/7/2 16:30
+ **/
 @Slf4j
 @RestController
 public class PayController {
@@ -34,7 +38,7 @@ public class PayController {
     //支付宝支付后回调方法
 
     /**
-     * @api {POST} /pay/zfb/notify 支付宝支付后回调方法*
+     * @api {POST} /pay/zfb/notify 支付宝支付后回调方法
      * @apiGroup Pay
      * @apiVersion 1.0.0
      * @apiExample {url} 接口示例
@@ -66,20 +70,23 @@ public class PayController {
         }
         try {
             if (params.get("trade_status").equals("TRADE_SUCCESS")) {
+
                 String outTradeNo = params.get("out_trade_no");
                 System.out.println("支付宝回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
-                String sub = outTradeNo.substring(2, 3);
-                /*************************************START SERVICE******************************************/
+                pay(outTradeNo,null);
                 log.info("---------------------------支付宝回调-------------------------------");
 
-                /*************************************END SERVICE******************************************/
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    //微信支付后回调方法
+    /**
+     * 微信支付后回调方法
+     * @param request
+     * @return
+     */
     @PostMapping(value = "/wcPay/notify")
     public String wcPayNotify(HttpServletRequest request) {
         InputStream inStream;
@@ -97,16 +104,13 @@ public class PayController {
             log.info("回调xml【" + result + "】");
             Map<String, String> map = XMLUtil.doXMLParse(result);
             // 验证签名
-            if (map.get("return_code").equals("SUCCESS")) {
+            if ("SUCCESS".equals(map.get("return_code"))) {
 
-                //更行订单数据
-                String outTradeNo = map.get("out_trade_no");//调起支付所传入的订单号
+                //调起支付所传入的支付流水号
+                String outTradeNo = map.get("out_trade_no");
                 System.out.println("微信回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
-                String sub = outTradeNo.substring(2, 3);
-                /*************************************START SERVICE******************************************/
-                log.info("---------------------------微信回调-------------------------------");
+                pay(outTradeNo,null);
 
-                /*************************************END SERVICE******************************************/
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,5 +121,13 @@ public class PayController {
     }
 
 
+    /**
+     * 支付回调通用业务逻辑
+     * @param outTradeNo 支付流水号
+     * @param payType 支付类型
+     */
+    private void pay(String outTradeNo,Integer payType){
+        String sub = outTradeNo.substring(0, 3);
 
+    }
 }

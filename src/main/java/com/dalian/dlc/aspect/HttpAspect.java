@@ -13,7 +13,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.Result;
-
+/**
+ * @Author: liujiebang
+ * @Description: 日志切面
+ * @Date: 2018/6/27 15:03
+ **/
 @Aspect
 @Component
 @Slf4j
@@ -58,7 +62,7 @@ public class HttpAspect {
         }
     }
 
-    @AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
+    @AfterReturning(pointcut = "log()",returning = "object")
     public void doAfterReturing(Object object){
         log.info("response={}",object.toString());
     }

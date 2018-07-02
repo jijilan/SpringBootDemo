@@ -9,7 +9,11 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
-
+/**
+ * @Author: liujiebang
+ * @Description: JWT工具类
+ * @Date: 2018/7/2 16:52
+ **/
 public class JwtUtil {
 
     /**

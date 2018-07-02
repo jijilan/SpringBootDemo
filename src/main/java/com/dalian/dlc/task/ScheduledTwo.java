@@ -7,8 +7,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * 定时任务类
- */
+ * @Author: liujiebang
+ * @Description: 定时器two
+ * @Date: 2018/7/2 16:55
+ **/
 @Slf4j
 @Component
 public class ScheduledTwo {

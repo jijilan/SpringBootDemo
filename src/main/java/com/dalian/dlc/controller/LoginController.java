@@ -18,7 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @Author: liujiebang
+ * @Description: 登录
+ * @Date: 2018/7/2 16:48
+ **/
 @Slf4j
 @RestController
 public class LoginController {
@@ -57,7 +61,8 @@ public class LoginController {
         if (loginType == ResultStatus.PHONE_LOGIN && !code.equals(phoneCode)) {
             return ResultView.error(ResultEnum.CODE_11);
         }
-        Users users=null;/**这部分逻辑需自己补充*/
+        /**这部分逻辑需自己补充*/
+        Users users=null;
 
         if (users != null){
             String jwtToken = jwtToken(ResultStatus.USER_ID,users.getUserId(),users);
@@ -84,7 +89,8 @@ public class LoginController {
         if (StringUtils.isEmpty(loginPassword)) {
             return ResultView.error(ResultEnum.CODE_15);
         }
-        Manager manager = null;/**这部分逻辑需自己补充*/
+        /**这部分逻辑需自己补充*/
+        Manager manager = null;
         if (null != manager) {
             String jwtToken = jwtToken(ResultStatus.MANAGER_ID,manager.getManagerId(),manager);
             Map<String, Object> map = new HashMap<>();
@@ -113,7 +119,8 @@ public class LoginController {
             return ResultView.error(ResultEnum.CODE_16);
         }
         String phoneCode = LotteryUtil.getRandomNum(6);
-        String messageModel = PhoneSMS.messageModel(phoneCode, type);//1:登录  2:绑定手机
+        //1:登录  2:绑定手机
+        String messageModel = PhoneSMS.messageModel(phoneCode, type);
         if (PhoneSMS.sendSMS(messageModel, phone) == 1) {
             redisService.set(ResultStatus.DALIANPARKING + phone, phoneCode, 180);
             log.info("给" + phone + "手机号码发送验证码----->" + phoneCode);

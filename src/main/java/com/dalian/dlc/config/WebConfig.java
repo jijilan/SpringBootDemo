@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
 /**
- * 过滤器与拦截器配置
- */
+ * @Author: liujiebang
+ * @Description: 过滤器与拦截器配置
+ * @Date: 2018/6/27 15:05
+ **/
 @Slf4j
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter{

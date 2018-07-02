@@ -1,5 +1,9 @@
 package com.dalian.dlc.result;
-
+/**
+ * @Author: liujiebang
+ * @Description: 常量
+ * @Date: 2018/7/2 16:54
+ **/
 public class ResultStatus {
 
     public static final String DALIANPARKING = "dalianParking_";

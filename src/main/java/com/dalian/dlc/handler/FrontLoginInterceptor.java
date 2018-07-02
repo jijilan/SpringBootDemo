@@ -18,7 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * @Author: liujiebang
+ * @Description: 前端拦截器
+ * @Date: 2018/7/2 16:50
+ **/
 @Slf4j
 public class FrontLoginInterceptor implements HandlerInterceptor{
 

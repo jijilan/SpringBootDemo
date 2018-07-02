@@ -1,7 +1,11 @@
 package com.dalian.dlc.result;
 
 import lombok.Data;
-
+/**
+ * @Author: liujiebang
+ * @Description: restFul自定义响应类
+ * @Date: 2018/7/2 16:54
+ **/
 @Data
 public class ResultView {
 

@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+/**
+ * @Author: liujiebang
+ * @Description: 非Controller异常restFul风格处理
+ * @Date: 2018/7/2 16:49
+ **/
 @Slf4j
 @RestController
 public class ErrorController implements org.springframework.boot.autoconfigure.web.ErrorController {

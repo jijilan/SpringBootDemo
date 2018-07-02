@@ -3,6 +3,9 @@ package com.dalian.dlc.exception;
 import com.dalian.dlc.result.ResultEnum;
 import lombok.Getter;
 
+/**
+ * 授权异常类
+ */
 @Getter
 public class AuthException extends RuntimeException {
 

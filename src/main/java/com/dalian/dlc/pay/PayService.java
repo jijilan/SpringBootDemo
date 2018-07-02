@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2018/4/3.
- */
+ * @Author: liujiebang
+ * @Description: 支付通用类
+ * @Date: 2018/7/2 16:53
+ **/
 @Component
 public class PayService {
 

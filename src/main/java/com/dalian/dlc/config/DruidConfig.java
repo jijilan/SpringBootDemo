@@ -1,12 +1,8 @@
 package com.dalian.dlc.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,8 +13,10 @@ import java.sql.SQLException;
 
 
 /**
- * Druid数据源配置类
- */
+ * @Author: liujiebang
+ * @Description: Druid数据源配置类
+ * @Date: 2018/6/27 15:05
+ **/
 @Slf4j
 @PropertySource(value = "classpath:/propertiess/druid.properties")
 @Configuration
@@ -77,8 +75,8 @@ public class DruidConfig {
     @Value("${spring.datasource.connectionProperties}")
     private String connectionProperties;
 
-    @Bean     //声明其为Bean实例
-    @Primary  //在同样的DataSource中，首先使用被标注的DataSource
+    @Bean
+    @Primary
     public DataSource dataSource(){
         DruidDataSource datasource = new DruidDataSource();
 

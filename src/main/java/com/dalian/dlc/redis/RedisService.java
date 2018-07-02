@@ -14,8 +14,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by 刘洁邦 on 2018/3/21.
- */
+ * @Author: liujiebang
+ * @Description: redis工具类
+ * @Date: 2018/7/2 16:53
+ **/
 @Component
 public class RedisService {
 

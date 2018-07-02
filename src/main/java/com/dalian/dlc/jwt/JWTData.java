@@ -5,7 +5,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-
+/**
+ * @Author: liujiebang
+ * @Description: JWT加密参数类
+ * @Date: 2018/7/2 16:52
+ **/
 @Data
 @PropertySource(value = "classpath:/propertiess/jwt.properties")
 @Component

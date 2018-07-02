@@ -15,17 +15,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
+/**
+ * @Author: liujiebang
+ * @Description: 高德
+ * @Date: 2018/7/2 17:00
+ **/
 @Slf4j
 @Data
 @ConfigurationProperties(prefix = "gaode")
 @Component
 public class GaoDeMapUtil {
 
-    // 高德应用的地址
+    /**高德应用的地址*/
     private String key;
 
-    // 地理编码地址
+    /**地理编码地址*/
     private static String map_codeurl = "http://restapi.amap.com/v3/geocode/geo";
 
 
