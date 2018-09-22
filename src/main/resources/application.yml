@@ -1,0 +1,46 @@
+# 服务配置
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: x-forwarded-for
+    protocol_header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  use-forward-headers: true
+# spring 相关配置
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 500MB
+
+# mybatis-plus相关配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.springboot.dlc.entity
+  #type-aliases-super-type: java.lang.Object
+  #type-handlers-package: com.springboot.dlc.handler
+  #type-enums-package: com.springboot.dlc.enums
+  executor-type: simple
+  configuration:
+    auto-mapping-unknown-column-behavior: none
+    auto-mapping-behavior: partial
+    cache-enabled: true
+    call-setters-on-nulls: false
+  global-config:
+      refresh: true
+      db-config:
+        db-type: mysql
+        id-type: id_worker
+
+
+# 公共资源
+web:
+  static-resource-path: /javadata/SZJAVA/czjsharebed/
+  project-path: http://lizhongsharebed.dlc-sz.com/
+  welcome-path: /index.html
+  equipment-path: https://lizhongsharebed.dlc-sz.com/downloadQr?equipmentNumber=
