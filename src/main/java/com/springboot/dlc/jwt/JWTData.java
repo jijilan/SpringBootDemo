@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Data
 @PropertySource(value = "classpath:/config/jwt.properties")
 @Component
-public class JWTData {
+public class JwtData {
 
     @Value("${audience.clientId}")
     private String clientId;
