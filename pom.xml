@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.czjsharebed</groupId>
+    <groupId>com.springboot</groupId>
     <artifactId>dlc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -25,12 +25,19 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
         <!--spring切面aop依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,11 +54,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--mybatis-->
+        <!--freemarker-->
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!--mysql-->
         <dependency>
@@ -59,17 +71,17 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <!-- Slog4j -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!-- test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <!--druid-->
         <dependency>
@@ -82,19 +94,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
-        </dependency>
-        <!--pageHelper-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.1.2</version>
-        </dependency>
-        <!-- net.json  -->
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <classifier>jdk15</classifier>
-            <version>2.3</version>
         </dependency>
         <!--热加载-->
         <dependency>
@@ -151,11 +150,17 @@
         <dependency>
             <groupId>com.github.liujiebang</groupId>
             <artifactId>pay</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.2</version>
+        </dependency>
+        <!--七牛-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.2.0, 7.2.99]</version>
         </dependency>
     </dependencies>
     <build>
-        <finalName>czjsharebed</finalName>
+        <finalName>springboot</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -164,32 +169,6 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
-            <!-- mybatis generator 自动生成代码插件 -->
-            	<!--<plugin>-->
-                    <!--<groupId>org.mybatis.generator</groupId>-->
-                    <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-                    <!--<version>1.3.2</version>-->
-                    <!--<configuration>-->
-                        <!--<configurationFile>src/main/resources/generatorConfig.xml</configurationFile>-->
-                        <!--<overwrite>true</overwrite>-->
-                        <!--<verbose>true</verbose>-->
-                    <!--</configuration>-->
-                    <!--<executions>-->
-                        <!--<execution>-->
-                            <!--<id>Generate MyBatis Artifacts</id>-->
-                            <!--<goals>-->
-                                <!--<goal>generate</goal>-->
-                            <!--</goals>-->
-                        <!--</execution>-->
-                    <!--</executions>-->
-                    <!--<dependencies>-->
-                        <!--<dependency>-->
-                            <!--<groupId>org.mybatis.generator</groupId>-->
-                            <!--<artifactId>mybatis-generator-core</artifactId>-->
-                            <!--<version>1.3.2</version>-->
-                        <!--</dependency>-->
-                    <!--</dependencies>-->
-                <!--</plugin>-->
         </plugins>
     </build>
 </project>
