@@ -19,6 +19,11 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
+/**
+ * @Author: liujiebang
+ * @Description: redis配置类
+ * @Date: 2018/6/27 15:05
+ **/
 @Slf4j
 @Configuration
 @EnableCaching

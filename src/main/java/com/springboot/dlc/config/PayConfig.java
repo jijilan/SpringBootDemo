@@ -1,7 +1,6 @@
 package com.springboot.dlc.config;
 
 
-
 import com.github.liujiebang.pay.ali.config.AliPayConfig;
 import com.github.liujiebang.pay.ali.service.AliPayService;
 import com.github.liujiebang.pay.ali.service.impl.AliPayServiceImpl;
@@ -18,8 +17,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * 支付参数
- */
+ * @Author: liujiebang
+ * @Description: 微信支付授权,支付宝支付配置类
+ * @Date: 2018/6/27 15:05
+ **/
 @Data
 @PropertySource(value = "classpath:/config/pay.properties")
 @Configuration
@@ -28,140 +29,139 @@ public class PayConfig {
      * 微信APP
      */
     @Value("${wx_OpAppId}")
-    private String wx_OpAppId;
+    private String wxOpAppId;
     @Value("${wx_OpSecrect}")
-    private String wx_OpSecrect;
+    private String wxOpSecrect;
     @Value("${wx_OpMchId}")
-    private String wx_OpMchId;
+    private String wxOpMchId;
     @Value("${wx_OpCertPath}")
-    private String wx_OpCertPath;
+    private String wxOpCertPath;
     @Value("${wx_OpMchKey}")
-    private String wx_OpMchKey;
+    private String wxOpMchKey;
 
     /**
      * 微信公众号
      */
     @Value("${wx_PpAppId}")
-    private  String wx_PpAppId;
+    private String wxPpAppId;
     @Value("${wx_PpMchId}")
-    private  String wx_PpMchId;
+    private String wxPpMchId;
     @Value("${wx_PpSecrect}")
-    private  String wx_PpSecrect;
+    private String wxPpSecrect;
     @Value("${wx_PpMchKey}")
-    private  String wx_PpMchKey;
+    private String wxPpMchKey;
     @Value("${wx_PpCertPath}")
-    private String wx_PpCertPath;
+    private String wxPpCertPath;
 
     /**
      * 微信小程序
      */
     @Value("${wx_SpAppId}")
-    private  String wx_SpAppId;
+    private String wxSpAppId;
     @Value("${wx_SpMchId}")
-    private  String wx_SpMchId;
+    private String wxSpMchId;
     @Value("${wx_SpSecrect}")
-    private  String wx_SpSecrect;
+    private String wxSpSecrect;
     @Value("${wx_SpMchKey}")
-    private  String wx_SpMchKey;
+    private String wxSpMchKey;
     @Value("${wx_SpCertPath}")
-    private String wx_SpCertPath;
+    private String wxSpCertPath;
 
     /**
      * 微信统一回调地址
      */
     @Value("${wx_notifyUrl}")
-    private String wx_notifyUrl;
+    private String wxNotifyUrl;
 
     /**
      * 支付宝
      */
     @Value("${zfb_appId}")
-    private  String zfb_appId;
+    private String zfbAppId;
 
     @Value("${zfb_private_key}")
-    private  String zfb_private_key;
+    private String zfbPrivateKey;
     @Value("${zfb_public_key}")
-    private  String zfb_public_key;
+    private String zfbPublicKey;
     @Value("${zfb_sign_type}")
-    private  String zfb_sign_type;
+    private String zfbSignType;
     @Value("${zfb_notifyUrl}")
-    private  String zfb_notifyUrl;
+    private String zfbNotifyUrl;
     @Value("${zfb_gateway}")
-    private  String zfb_gateway;
+    private String zfbGateway;
     @Value("${zfb_seller_id}")
-    private  String zfb_seller_id;
+    private String zfbSellerId;
     @Value("${zfb_charset}")
-    private  String zfb_charset;
+    private String zfbCharset;
     @Value("${zfb_Object}")
-    private  String zfb_Object;
+    private String zfbObject;
     @Value("${zfb_returnUrl}")
-    private  String zfb_returnUrl;
-    @Value("${zfb_appId_user}")
-    private  String zfb_appId_user;
+    private String zfbReturnUrl;
     @Value("${zfb_private_key_user}")
-    private  String zfb_private_key_user;
+    private String zfbPrivateKeyUser;
     @Value("${zfb_public_key_user}")
-    private  String zfb_public_key_user;
+    private String zfbPublicKeyUser;
 
 
     @Bean
-    public AliPayService aliPayService(){
-        AliPayService aliPayService=new AliPayServiceImpl();
+    public AliPayService aliPayService() {
+        AliPayService aliPayService = new AliPayServiceImpl();
         aliPayService.setAliPayConfigStorage(aliPayConfig());
         return aliPayService;
     }
 
     @Bean
-    public AliPayConfig aliPayConfig(){
-        AliPayConfig aliPayConfig=new AliPayConfig();
-        aliPayConfig.setAppId(zfb_appId);
-        aliPayConfig.setSellerId(zfb_seller_id);
-        aliPayConfig.setPrivateKey(zfb_private_key);
-        aliPayConfig.setPublicKey(zfb_public_key);
-        aliPayConfig.setPrivateKey_user(zfb_private_key_user);
-        aliPayConfig.setPublicKey_user(zfb_public_key_user);
-        aliPayConfig.setNotifyUrl(zfb_notifyUrl);
-        aliPayConfig.setReturnUrl(zfb_returnUrl);
+    public AliPayConfig aliPayConfig() {
+        AliPayConfig aliPayConfig = new AliPayConfig();
+        aliPayConfig.setAppId(zfbAppId);
+        aliPayConfig.setSellerId(zfbSellerId);
+        aliPayConfig.setPrivateKey(zfbPrivateKey);
+        aliPayConfig.setPublicKey(zfbPublicKey);
+        aliPayConfig.setPrivateKey_user(zfbPrivateKeyUser);
+        aliPayConfig.setPublicKey_user(zfbPrivateKeyUser);
+        aliPayConfig.setNotifyUrl(zfbNotifyUrl);
+        aliPayConfig.setReturnUrl(zfbReturnUrl);
         return aliPayConfig;
     }
 
 
     @Bean
-    public WxPayService wxPayService(){
-        WxPayService wxPayService=new WxPayServiceImpl();
+    public WxPayService wxPayService() {
+        WxPayService wxPayService = new WxPayServiceImpl();
         wxPayService.setWxConfigStorage(wxConfig());
         return wxPayService;
     }
 
     @Bean
-    public WxAuthService wxAuthService(){
-        WxAuthService wxAuthService=new WxAuthServiceImpl();
+    public WxAuthService wxAuthService() {
+        WxAuthService wxAuthService = new WxAuthServiceImpl();
         wxAuthService.setWxConfigStorage(wxConfig());
         return wxAuthService;
     }
+
     @Bean
-    public WxConfig wxConfig(){
-        WxConfig wxPayConfig=new WxConfig();
+    public WxConfig wxConfig() {
+        WxConfig wxPayConfig = new WxConfig();
         //APP
-        wxPayConfig.setWxOpAppId(wx_OpAppId);
-        wxPayConfig.setWxOpSecrect(wx_OpSecrect);
-        wxPayConfig.setWxOpMchId(wx_OpMchId);
-        wxPayConfig.setWxOpMchKey(wx_OpMchKey);
-        wxPayConfig.setWxOpCertPath(wx_OpCertPath);
+        wxPayConfig.setWxOpAppId(wxOpAppId);
+        wxPayConfig.setWxOpSecrect(wxOpSecrect);
+        wxPayConfig.setWxOpMchId(wxOpMchId);
+        wxPayConfig.setWxOpMchKey(wxOpMchKey);
+        wxPayConfig.setWxOpCertPath(wxOpCertPath);
         //公众号
-        wxPayConfig.setWxPpAppId(wx_PpAppId);
-        wxPayConfig.setWxPpSecrect(wx_PpSecrect);
-        wxPayConfig.setWxPpMchId(wx_PpMchId);
-        wxPayConfig.setWxPpMchKey(wx_PpMchKey);
-        wxPayConfig.setWxPpCertPath(wx_PpCertPath);
+        wxPayConfig.setWxPpAppId(wxPpAppId);
+        wxPayConfig.setWxPpSecrect(wxPpSecrect);
+        wxPayConfig.setWxPpMchId(wxPpMchId);
+        wxPayConfig.setWxPpMchKey(wxPpMchKey);
+        wxPayConfig.setWxPpCertPath(wxPpCertPath);
         //小程序
-        wxPayConfig.setWxSpAppId(wx_SpAppId);
-        wxPayConfig.setWxSpSecrect(wx_SpSecrect);
-        wxPayConfig.setWxSpMchId(wx_SpMchId);
-        wxPayConfig.setWxSpMchKey(wx_SpMchKey);
-        wxPayConfig.setWxSpCertPath(wx_SpCertPath);
+        wxPayConfig.setWxSpAppId(wxSpAppId);
+        wxPayConfig.setWxSpSecrect(wxSpSecrect);
+        wxPayConfig.setWxSpMchId(wxSpMchId);
+        wxPayConfig.setWxSpMchKey(wxSpMchKey);
+        wxPayConfig.setWxSpCertPath(wxSpCertPath);
         //统一回调地址
-        wxPayConfig.setNotifyUrl(wx_notifyUrl);
+        wxPayConfig.setNotifyUrl(wxNotifyUrl);
         return wxPayConfig;
     }
 }
