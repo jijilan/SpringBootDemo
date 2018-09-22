@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2018/7/2 16:52
  **/
 @Data
-@PropertySource(value = "classpath:/propertiess/jwt.properties")
+@PropertySource(value = "classpath:/config/jwt.properties")
 @Component
 public class JwtData {
 
