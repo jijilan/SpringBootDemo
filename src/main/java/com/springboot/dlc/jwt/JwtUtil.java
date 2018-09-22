@@ -68,9 +68,9 @@ public class JwtUtil {
         return builder.compact();
     }
 
-    public static String getUniqueId(HttpServletRequest request, JWTData jwtData, String token, String unique){
+    public static String getUniqueId(HttpServletRequest request, JwtData jwtData, String token, String unique){
         BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-        jwtData = factory.getBean(JWTData.class);
+        jwtData = factory.getBean(JwtData.class);
         final Claims claims = JwtUtil.parseJWT(token, jwtData.getBase64Secret());
         String uniqueId = (String) claims.get(unique);
         return uniqueId;

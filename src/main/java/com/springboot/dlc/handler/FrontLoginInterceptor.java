@@ -4,14 +4,11 @@ import com.alibaba.druid.util.StringUtils;
 import com.springboot.dlc.exception.AuthException;
 import com.springboot.dlc.jwt.JwtUtil;
 import com.springboot.dlc.result.ResultEnum;
-import com.springboot.dlc.jwt.JWTData;
+import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.redis.RedisService;
 import com.springboot.dlc.result.ResultStatus;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,15 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontLoginInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private JWTData jwtData;
+    private JwtData jwtData;
     @Autowired
     private RedisService redisService;
 
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("第一条防线-----------------------------------------");
-        //controller方法调用之前
         String token = request.getHeader(ResultStatus.TOKEN);
         if (StringUtils.isEmpty(token)) {
             throw new AuthException(ResultEnum.CODE_3);

@@ -1,7 +1,7 @@
-package com.springboot.dlc.controller;
+package com.springboot.dlc.controller.system;
 
 
-import com.springboot.dlc.jwt.JWTData;
+import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.jwt.JwtUtil;
 
 import com.springboot.dlc.redis.RedisService;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private JWTData jwtData;
+    private JwtData jwtData;
     @Autowired
     private RedisService redisService;
 

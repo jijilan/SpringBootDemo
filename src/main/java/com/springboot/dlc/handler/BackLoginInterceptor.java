@@ -2,7 +2,7 @@ package com.springboot.dlc.handler;
 
 import com.alibaba.druid.util.StringUtils;
 import com.springboot.dlc.exception.AuthException;
-import com.springboot.dlc.jwt.JWTData;
+import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.jwt.JwtUtil;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.redis.RedisService;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BackLoginInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private JWTData jwtData;
+    private JwtData jwtData;
     @Autowired
     private RedisService redisService;
 
