@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/wx-agent")
+@RequestMapping("/front/wx-agent")
 public class WxAgentController {
 
     @Autowired
