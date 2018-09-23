@@ -76,31 +76,18 @@ public class PayConfig {
     /**
      * 支付宝
      */
-    @Value("${zfb_appId}")
-    private String zfbAppId;
-
-    @Value("${zfb_private_key}")
-    private String zfbPrivateKey;
-    @Value("${zfb_public_key}")
-    private String zfbPublicKey;
-    @Value("${zfb_sign_type}")
-    private String zfbSignType;
-    @Value("${zfb_notifyUrl}")
-    private String zfbNotifyUrl;
-    @Value("${zfb_gateway}")
-    private String zfbGateway;
-    @Value("${zfb_seller_id}")
-    private String zfbSellerId;
-    @Value("${zfb_charset}")
-    private String zfbCharset;
-    @Value("${zfb_Object}")
-    private String zfbObject;
-    @Value("${zfb_returnUrl}")
-    private String zfbReturnUrl;
-    @Value("${zfb_private_key_user}")
-    private String zfbPrivateKeyUser;
-    @Value("${zfb_public_key_user}")
-    private String zfbPublicKeyUser;
+    @Value("${ali_appId}")
+    private String aliAppId;
+    @Value("${ali_private_key}")
+    private String aliPrivateKey;
+    @Value("${ali_public_key}")
+    private String aliPublicKey;
+    @Value("${ali_notifyUrl}")
+    private String aliNotifyUrl;
+    @Value("${ali_seller_id}")
+    private String aliSellerId;
+    @Value("${ali_returnUrl}")
+    private String aliReturnUrl;
 
 
     @Bean
@@ -113,14 +100,12 @@ public class PayConfig {
     @Bean
     public AliPayConfig aliPayConfig() {
         AliPayConfig aliPayConfig = new AliPayConfig();
-        aliPayConfig.setAppId(zfbAppId);
-        aliPayConfig.setSellerId(zfbSellerId);
-        aliPayConfig.setPrivateKey(zfbPrivateKey);
-        aliPayConfig.setPublicKey(zfbPublicKey);
-        aliPayConfig.setPrivateKey_user(zfbPrivateKeyUser);
-        aliPayConfig.setPublicKey_user(zfbPrivateKeyUser);
-        aliPayConfig.setNotifyUrl(zfbNotifyUrl);
-        aliPayConfig.setReturnUrl(zfbReturnUrl);
+        aliPayConfig.setAppId(aliAppId);
+        aliPayConfig.setSellerId(aliSellerId);
+        aliPayConfig.setPrivateKey(aliPrivateKey);
+        aliPayConfig.setAlipayPublicKey(aliPublicKey);
+        aliPayConfig.setNotifyUrl(aliNotifyUrl);
+        aliPayConfig.setReturnUrl(aliReturnUrl);
         return aliPayConfig;
     }
 
