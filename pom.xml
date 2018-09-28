@@ -150,13 +150,19 @@
         <dependency>
             <groupId>com.github.liujiebang</groupId>
             <artifactId>pay</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.3</version>
         </dependency>
         <!--七牛-->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
             <version>[7.2.0, 7.2.99]</version>
+        </dependency>
+        <!--stripe-->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>7.0.0</version>
         </dependency>
     </dependencies>
     <build>
