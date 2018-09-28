@@ -50,12 +50,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      *
      * @param registry
      */
-    @Override
+/*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("file:" + staticResourcePath);
         super.addResourceHandlers(registry);
-    }
+    }*/
 
     /**
      * 请求重定向
@@ -63,11 +63,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      *
      * @param registry
      */
-    @Override
+/*    @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", projectPath + welcomePath);
         super.addViewControllers(registry);
-    }
+    }*/
 
     /**
      * 设置HTTP请求报文字符串UTF-8编码格式

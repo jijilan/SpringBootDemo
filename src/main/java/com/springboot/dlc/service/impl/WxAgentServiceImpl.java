@@ -6,12 +6,14 @@ import com.springboot.dlc.entity.WxAgent;
 import com.springboot.dlc.mapper.WxAgentMapper;
 import com.springboot.dlc.service.IWxAgentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author liujiebang
@@ -22,8 +24,8 @@ public class WxAgentServiceImpl extends ServiceImpl<WxAgentMapper, WxAgent> impl
 
     @Override
     public IPage findAgentAndRole(Integer pageNo, Integer pageSize) {
-        IPage iPage=new Page(pageNo,pageSize);
-        List<WxAgent> wxAgentList = super.baseMapper.findAgentAndRole(iPage);
+        IPage iPage = new Page(pageNo, pageSize);
+        List<WxAgent> wxAgentList = baseMapper.findAgentAndRole(iPage);
         iPage.setRecords(wxAgentList);
         return iPage;
     }

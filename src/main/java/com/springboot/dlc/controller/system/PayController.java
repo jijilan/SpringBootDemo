@@ -4,6 +4,10 @@ package com.springboot.dlc.controller.system;
 import com.github.liujiebang.pay.utils.XMLUtil;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.Refund;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +23,7 @@ import java.util.*;
 @RestController
 public class PayController {
 
+
     /**
      * 支付
      *
@@ -31,6 +36,39 @@ public class PayController {
         Map map = null;
 
         return ResultView.ok(map);
+    }
+
+    /**
+     * stripe Pay
+     *
+     * @param request
+     * @return
+     * @throws StripeException
+     */
+    @PostMapping(value = "/stripe/pay")
+    public ResultView stripePay(HttpServletRequest request) throws StripeException {
+
+        Stripe.apiKey = "sk_test_F47Scya3Pi6tuUMReKFIsa5c";
+        String token = request.getParameter("stripeToken");
+        String stripeTokenType = request.getParameter("stripeTokenType");
+        String stripeEmail = request.getParameter("stripeEmail");
+        log.info(token);
+        log.info(stripeTokenType);
+        log.info(stripeEmail);
+        Map<String, Object> params = new HashMap<>();
+        params.put("amount", 9999);
+        params.put("currency", "usd");
+        params.put("description", "Example charge");
+        params.put("source", token);
+        params.put("statement_descriptor", "Custom descriptor");
+        Charge charge = Charge.create(params);
+        if ("succeeded".equals(charge.getStatus())) {
+            log.info("支付成功后的支付标识，可用于退款" + charge.getId());
+            log.info("支付结果----" + charge.getStatus());
+        } else if ("failed".equals(charge.getStatus())) {
+            log.info("拒绝通知结果---" + charge.getOutcome().toJson());
+        }
+        return ResultView.ok();
     }
 
     /**
@@ -101,5 +139,17 @@ public class PayController {
     private void pay(String outTradeNo, String payType) {
 
         String sub = outTradeNo.substring(0, 3);
+    }
+
+    public static void main(String[] args) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("charge", "ch_1DEvhpBZlgk9Vyx2AQKo6ILr");
+        //params.put("amount", 999);
+        try {
+            Refund refund = Refund.create(params);
+            System.out.println(refund.getStatus());
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/front/wx-agent")
+@RequestMapping("/wx-agent")
 public class WxAgentController {
 
     @Autowired
@@ -33,23 +33,39 @@ public class WxAgentController {
     @Value("${web.static-resource-path}")
     private String staticResourcePath;
 
+    /**
+     * 根据主键查询单个对象
+     * @param id
+     * @return
+     */
     @GetMapping("/get/{id}")
     public ResultView get(@PathVariable String id) {
         WxAgent wxAgent = wxAgentService.getById(id);
         return ResultView.ok(wxAgent);
     }
 
-    @GetMapping("/find")
-    public ResultView find() {
-        IPage iPage = new Page(1, 10);
+    /**
+     * 分页查询单个对象
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/find/{pageNo}/{pageSize}")
+    public ResultView find(@PathVariable Integer pageNo, @PathVariable Integer pageSize) {
+        IPage iPage = new Page(pageNo, pageSize);
         IPage page = wxAgentService.page(iPage, null);
         return ResultView.ok(page);
     }
 
-
-    @GetMapping("/findAgentAndRole")
-    public ResultView findAgentAndRole(Integer pageNo,Integer pageSize){
-        IPage page = wxAgentService.findAgentAndRole(pageNo,pageSize);
+    /**
+     * 分页查询多个多谢
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/findAgentAndRole/{pageNo}/{pageSize}")
+    public ResultView findAgentAndRole(@PathVariable Integer pageNo, @PathVariable Integer pageSize) {
+        IPage page = wxAgentService.findAgentAndRole(pageNo, pageSize);
         return ResultView.ok(page);
     }
 }
