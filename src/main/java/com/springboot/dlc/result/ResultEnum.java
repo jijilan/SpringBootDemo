@@ -12,7 +12,6 @@ public enum ResultEnum {
 
 
     CODE_1(1, "操作成功！"),
-
     CODE_2(2, "操作失败！"),
     CODE_3(3, "用户未登陆！"),
     CODE_4(4, "账号或者密码错误！"),
@@ -42,6 +41,7 @@ public enum ResultEnum {
     CODE_500(500, "服务器出错了，请联系后台开发人员！"),
     CODE_1001(1001, "获取短信验证码失败！"),
     CODE_1002(1002, "服务器数据异常！"),
+    CODE_1003(1003, "Payment failed"),
     CODE_9999(9999, "服务器无法处理请求！");
 
     private Integer code;

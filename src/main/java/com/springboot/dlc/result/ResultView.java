@@ -29,11 +29,14 @@ public class ResultView {
         return new ResultView(resultEnum.getCode(), resultEnum.getMsg());
     }
 
-
+    public static ResultView error(Integer code,String message) {
+        return new ResultView(code,message);
+    }
     private ResultView(){
         this.code=ResultEnum.CODE_1.getCode();
         this.msg=ResultEnum.CODE_1.getMsg();
     }
+
     private ResultView(Object data){
         this.data=data;
         this.code=ResultEnum.CODE_1.getCode();

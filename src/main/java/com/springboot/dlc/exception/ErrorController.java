@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  * @Author: liujiebang
  * @Description: 非Controller异常restFul风格处理
@@ -20,7 +21,7 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
     private static final String ERROR_PATH = "/error";
 
     @RequestMapping(value = ERROR_PATH)
-    public ResultView handleError(HttpServletResponse response,HttpServletRequest request) {
+    public ResultView handleError(HttpServletResponse response,HttpServletRequest request){
         String ip = request.getHeader("x-forwarded-for");
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");

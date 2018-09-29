@@ -2,6 +2,9 @@ package com.springboot.dlc.controller.system;
 
 
 import com.github.liujiebang.pay.utils.XMLUtil;
+import com.springboot.dlc.exception.MyException;
+import com.springboot.dlc.exception.PayException;
+import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
 import com.stripe.Stripe;
@@ -46,9 +49,9 @@ public class PayController {
      * @throws StripeException
      */
     @PostMapping(value = "/stripe/pay")
-    public ResultView stripePay(HttpServletRequest request) throws StripeException {
+    public ResultView stripePay(HttpServletRequest request){
 
-        Stripe.apiKey = "sk_test_F47Scya3Pi6tuUMReKFIsa5c";
+        Stripe.apiKey = "sk_live_wdP8a3qTvSyEMNGXMipF8CJb";
         String token = request.getParameter("stripeToken");
         String stripeTokenType = request.getParameter("stripeTokenType");
         String stripeEmail = request.getParameter("stripeEmail");
@@ -56,19 +59,27 @@ public class PayController {
         log.info(stripeTokenType);
         log.info(stripeEmail);
         Map<String, Object> params = new HashMap<>();
-        params.put("amount", 9999);
+        params.put("amount", 11);
         params.put("currency", "usd");
         params.put("description", "Example charge");
         params.put("source", token);
         params.put("statement_descriptor", "Custom descriptor");
-        Charge charge = Charge.create(params);
-        if ("succeeded".equals(charge.getStatus())) {
-            log.info("支付成功后的支付标识，可用于退款" + charge.getId());
-            log.info("支付结果----" + charge.getStatus());
-        } else if ("failed".equals(charge.getStatus())) {
-            log.info("拒绝通知结果---" + charge.getOutcome().toJson());
+        try{
+            Charge charge = Charge.create(params);
+            if ("succeeded".equals(charge.getStatus())) {
+                log.info("支付成功后的支付标识，可用于退款" + charge.getId());
+                log.info("支付结果----" + charge.getStatus());
+                return ResultView.ok();
+            } else if ("failed".equals(charge.getStatus())) {
+                log.info("拒绝通知结果---" + charge.getOutcome().toJson());
+            }
+        }catch (StripeException e){
+            StringBuffer sb=new StringBuffer(ResultEnum.CODE_1003.getMsg());
+            sb.append(". ");
+            sb.append(e.getMessage());
+            throw new PayException(ResultEnum.CODE_1003,sb.toString());
         }
-        return ResultView.ok();
+        return ResultView.error(ResultEnum.CODE_1003);
     }
 
     /**
