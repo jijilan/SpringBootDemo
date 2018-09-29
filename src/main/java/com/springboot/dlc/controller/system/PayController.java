@@ -1,6 +1,7 @@
 package com.springboot.dlc.controller.system;
 
 
+import com.github.liujiebang.pay.ali.config.AliConfig;
 import com.github.liujiebang.pay.utils.XMLUtil;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
@@ -63,26 +64,18 @@ public class PayController {
     public ResultView refund(String paymentFolw){
         return StripePayApi.refund(paymentFolw);
     }
+
+
     /**
-     * @api {POST} /pay/zfb/notify 支付宝支付后回调方法
-     * @apiGroup Pay
-     * @apiVersion 1.0.0
-     * @apiExample {url} 接口示例
-     * curl -i http://120.79.18.21:8080/goodOrders/nlg/zfb/notify
-     * @apiSuccessExample {json} 微信成功的响应
-     * HTTP/1.1 200 OK
-     * @apiSuccessExample {json} 成功的响应
-     * HTTP/1.1 200 OK
-     * ｛
-     * "code":1
-     * "msg":"操作成功"
-     * ｝
+     * 支付宝异步回调方法
+     * @param request
+     * @return
      */
     @RequestMapping(value = "/zfb/notify")
     public String zfbNotify(HttpServletRequest request) {
         try {
             Map<String, String> map = XMLUtil.aliPayNotify(request);
-            if (map.get("trade_status").equals("TRADE_SUCCESS")) {
+            if (AliConfig.TradeStatus.TRADE_SUCCESS.equals(map.get("trade_status"))) {
                 String outTradeNo = map.get("out_trade_no");
                 System.out.println("支付宝回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
                 pay(outTradeNo, "支付宝");
@@ -97,7 +90,7 @@ public class PayController {
     }
 
     /**
-     * 微信支付后回调方法
+     * 微信支付异步回调方法
      *
      * @param request
      * @return
@@ -106,19 +99,20 @@ public class PayController {
     public String wcPayNotify(HttpServletRequest request) {
         try {
             Map<String, String> map = XMLUtil.wxPayNotify(request);
-            // 验证签名
-            if ("SUCCESS".equals(map.get("return_code"))) {
-                //调起支付所传入的支付流水号
-                String outTradeNo = map.get("out_trade_no");
-                System.out.println("微信回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
-                pay(outTradeNo, "微信");
+            if (ResultStatus.SUCCESS.equals(map.get("return_code"))
+                    && ResultStatus.SUCCESS.equals(map.get("result_code"))) {
+                    String outTradeNo = map.get("out_trade_no");
+                    System.out.println("微信回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
+                    pay(outTradeNo, ResultStatus.PAY_TYPE_WECHATPAY);
+                    return XMLUtil.setWechatXml("SUCCESS", "OK");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
             log.info("---------------------------回调通知异常！！！-------------------------------");
-        } finally {
-            return XMLUtil.setWechatXml("SUCCESS", "OK");
+            return XMLUtil.setWechatXml("FAIL", "回调通知异常");
         }
+        return XMLUtil.setWechatXml("FAIL", "订单支付失败");
     }
 
 

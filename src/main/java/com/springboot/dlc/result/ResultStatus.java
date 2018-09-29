@@ -25,6 +25,13 @@ public class ResultStatus {
 
     public static final String AGENT_ID = "agentId";
 
+    /**
+     * 支付方式（1：支付宝支付 ，2：微信支付）
+     */
+    public static final String PAY_TYPE_ALIPAY = "AliPay";
+    public static final String PAY_TYPE_WECHATPAY = "WeChatPay";
+
+    public static final String SUCCESS="SUCCESS";
 
     public static final String USER_TOP = "US";
     public static final String EQUIPMENTID_TOP = "EQ";
