@@ -42,6 +42,7 @@ public enum ResultEnum {
     CODE_1001(1001, "获取短信验证码失败！"),
     CODE_1002(1002, "服务器数据异常！"),
     CODE_1003(1003, "Payment failed"),
+    CODE_1004(1004,"Refund failed"),
     CODE_9999(9999, "服务器无法处理请求！");
 
     private Integer code;

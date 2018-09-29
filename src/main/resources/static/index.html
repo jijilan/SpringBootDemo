@@ -8,14 +8,15 @@
 <form action="/stripe/pay" method="POST">
     <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="pk_test_U8INmIh2NHZBZmrACZMvVK2H"
-            data-amount="999"
+            data-key="pk_test_NIqQRZ5NpErPUyKGkop5K11n"
+            data-amount="50"
             data-name="Stripe.com"
             data-description="Example charge"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
             data-locale="auto"
             data-zip-code="true">
     </script>
+    <input type="text" value="123456" name="orderId">
 </form>
 </body>
 </html>

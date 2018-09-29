@@ -7,6 +7,7 @@ import com.springboot.dlc.exception.PayException;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
+import com.springboot.dlc.utils.StripePayApi;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
@@ -37,51 +38,37 @@ public class PayController {
     public ResultView pay(HttpServletRequest request, String outTradeNo, String payType) {
         String userId = (String) request.getAttribute(ResultStatus.USER_ID);
         Map map = null;
-
         return ResultView.ok(map);
     }
 
     /**
      * stripe Pay
      *
-     * @param request
      * @return
      * @throws StripeException
      */
     @PostMapping(value = "/stripe/pay")
-    public ResultView stripePay(HttpServletRequest request){
-
-        Stripe.apiKey = "sk_live_wdP8a3qTvSyEMNGXMipF8CJb";
-        String token = request.getParameter("stripeToken");
-        String stripeTokenType = request.getParameter("stripeTokenType");
-        String stripeEmail = request.getParameter("stripeEmail");
-        log.info(token);
+    public ResultView stripePay(String stripeToken,
+                                String stripeTokenType,
+                                String stripeEmail,
+                                String orderId){
+        log.info(stripeToken);
         log.info(stripeTokenType);
         log.info(stripeEmail);
-        Map<String, Object> params = new HashMap<>();
-        params.put("amount", 11);
-        params.put("currency", "usd");
-        params.put("description", "Example charge");
-        params.put("source", token);
-        params.put("statement_descriptor", "Custom descriptor");
-        try{
-            Charge charge = Charge.create(params);
-            if ("succeeded".equals(charge.getStatus())) {
-                log.info("支付成功后的支付标识，可用于退款" + charge.getId());
-                log.info("支付结果----" + charge.getStatus());
-                return ResultView.ok();
-            } else if ("failed".equals(charge.getStatus())) {
-                log.info("拒绝通知结果---" + charge.getOutcome().toJson());
-            }
-        }catch (StripeException e){
-            StringBuffer sb=new StringBuffer(ResultEnum.CODE_1003.getMsg());
-            sb.append(". ");
-            sb.append(e.getMessage());
-            throw new PayException(ResultEnum.CODE_1003,sb.toString());
-        }
-        return ResultView.error(ResultEnum.CODE_1003);
+        //自己的订单号，查询支付金额
+        log.info(orderId);
+        return StripePayApi.stripePay(stripeToken,"999",null,null);
     }
 
+    /**
+     * stripe refund
+     * @param paymentFolw
+     * @return
+     */
+    @PostMapping("/stripe/refund")
+    public ResultView refund(String paymentFolw){
+        return StripePayApi.refund(paymentFolw);
+    }
     /**
      * @api {POST} /pay/zfb/notify 支付宝支付后回调方法
      * @apiGroup Pay
@@ -152,15 +139,5 @@ public class PayController {
         String sub = outTradeNo.substring(0, 3);
     }
 
-    public static void main(String[] args) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("charge", "ch_1DEvhpBZlgk9Vyx2AQKo6ILr");
-        //params.put("amount", 999);
-        try {
-            Refund refund = Refund.create(params);
-            System.out.println(refund.getStatus());
-        } catch (StripeException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
