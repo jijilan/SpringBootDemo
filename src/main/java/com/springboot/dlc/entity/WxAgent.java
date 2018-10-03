@@ -8,6 +8,11 @@ import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 
 /**
@@ -28,6 +33,7 @@ public class WxAgent implements Serializable {
     /**
      * 代理人编号
      */
+    @NotBlank(message = "代理人编号不能为空")
     @TableId("agentId")
     private String agentId;
 
@@ -40,6 +46,8 @@ public class WxAgent implements Serializable {
     /**
      * 代理人密码
      */
+    @NotBlank(message = "代理人密码不能为空")
+    @Length(min = 8,max = 16,message = "密码长度必须在8~16位之间")
     @TableField("agentPassWord")
     private String agentPassWord;
 
