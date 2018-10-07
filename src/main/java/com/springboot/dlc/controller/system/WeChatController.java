@@ -6,6 +6,7 @@ import com.github.liujiebang.pay.wx.service.WxAuthService;
 import com.springboot.dlc.result.ResultView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,8 @@ public class WeChatController {
     @Autowired
     private WxAuthService wxAuthService;
 
+    @Value("${web.project-path}")
+    protected String projectPath;
     /**
      * 公众号授权授权
      *
@@ -32,8 +35,8 @@ public class WeChatController {
      */
     @GetMapping("/publicPlatFormAuth")
     public String ppAuth(String resultUrl) {
-        String url = "http://shareescortbed.dlc-sz.com/publicPlatFormUserInfo";
-        return "redirect:" + wxAuthService.wxOpOAuth2CodeAuthorizationUrl(url, resultUrl);
+        String redirectUrl = projectPath+"publicPlatFormUserInfo";
+        return "redirect:" + wxAuthService.wxOpOAuth2CodeAuthorizationUrl(redirectUrl, resultUrl);
     }
 
     /**
@@ -48,7 +51,7 @@ public class WeChatController {
         try {
             WxOAuth2Info wxOAuth2Info = wxAuthService.wxPpOAuth2AccessToken(code);
             WxUserInfo wxUserInfo = wxAuthService.wxOAuth2getUserInfo(wxOAuth2Info.getAccess_token(), wxOAuth2Info.getOpenid());
-            log.info("用户信息" + wxUserInfo);
+            log.info("获取userInfo相关信息{}", wxUserInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,8 +66,8 @@ public class WeChatController {
      */
     @GetMapping("/openPlatFormAuth")
     public String openAuth(String resultUrl) {
-        String url = "http://shareescortbed.dlc-sz.com/openPlatFormUserInfo";
-        return "redirect:" + wxAuthService.wxOpOAuth2CodeAuthorizationUrl(url, resultUrl);
+        String redirectUrl = projectPath+"openPlatFormUserInfo";
+        return "redirect:" + wxAuthService.wxOpOAuth2CodeAuthorizationUrl(redirectUrl, resultUrl);
     }
 
     /**
