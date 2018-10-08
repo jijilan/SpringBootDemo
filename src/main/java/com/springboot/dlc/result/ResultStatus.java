@@ -7,9 +7,9 @@ package com.springboot.dlc.result;
  **/
 public class ResultStatus {
 
-    public static final String CZJSHAREBED = "czjShareBed_";
+    public static final String PROJECT_NAME = "springboot_";
 
-    public static final String TOKEN = "authorization";
+    public static final String TOKEN = "Authorization";
 
     public static final int TONKEN_OUT_TIME = 604800;
 

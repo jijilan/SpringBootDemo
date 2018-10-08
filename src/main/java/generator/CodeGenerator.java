@@ -64,9 +64,9 @@ public class CodeGenerator {
         dsc.setDbType(DbType.MYSQL);
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("lzsharebed_root");
-        dsc.setPassword("Szdlclzsharebed@43");
-        dsc.setUrl("jdbc:mysql://rm-wz9at4hz13l4e5vw58o.mysql.rds.aliyuncs.com/lzsharebed?useUnicode=true&useSSL=false");
+        dsc.setUsername("root");
+        dsc.setPassword("qwer1234.");
+        dsc.setUrl("jdbc:mysql://localhost:3306/lzsharebed?useUnicode=true&useSSL=false");
         dsc.setTypeConvert(new MySqlTypeConvert() {
 
             // 自定义数据库表字段类型转换【可选】
@@ -121,7 +121,7 @@ public class CodeGenerator {
         strategy.setRestControllerStyle(true);
         //strategy.setTablePrefix(new String[] { "sys_","wx_"});//根据表前缀匹配
         //strategy.setInclude(scanner("表名"));
-        strategy.setInclude("wx_finance");
+        strategy.setInclude("sys_manager","sys_manager_role","sys_menu","sys_role","sys_role_menu");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());

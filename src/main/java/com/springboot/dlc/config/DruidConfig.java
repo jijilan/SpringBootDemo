@@ -4,7 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -104,14 +103,12 @@ public class DruidConfig {
         datasource.setTestOnReturn(testOnReturn);
         datasource.setPoolPreparedStatements(poolPreparedStatements);
         datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+        datasource.setConnectionProperties(connectionProperties);
         try {
-
             datasource.setFilters(filters);
         } catch (SQLException e) {
             log.info("druid configuration initialization filter{}",e);
         }
-        datasource.setConnectionProperties(connectionProperties);
-
         return datasource;
     }
 
