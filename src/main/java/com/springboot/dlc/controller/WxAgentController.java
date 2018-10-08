@@ -8,9 +8,13 @@ import com.springboot.dlc.model.QPage;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.IWxAgentService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /**
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/wx-agent")
+@Validated
 public class WxAgentController {
 
     @Autowired
@@ -46,7 +51,10 @@ public class WxAgentController {
      * @return
      */
     @GetMapping("/find")
-    public ResultView find(QPage qpage) {
+    public ResultView find(QPage qpage,@NotBlank(message = "代理商名称不能为空") @RequestParam String agentName,
+                           @NotBlank(message = "代理商手机号码不能为空")
+                           @Length(min = 11,max = 11,message = "手机号码必须为11位数字")
+                           @RequestParam String agentPhone) {
         IPage iPage = new Page(qpage.getPageNo(), qpage.getPageSize());
         IPage page = wxAgentService.page(iPage, null);
         return ResultView.ok(page);
@@ -69,7 +77,7 @@ public class WxAgentController {
      * @return
      */
     @PostMapping
-    public ResultView save(@Validated WxAgent wxAgent){
+    public ResultView save(@Valid WxAgent wxAgent){
         return ResultView.ok();
     }
 

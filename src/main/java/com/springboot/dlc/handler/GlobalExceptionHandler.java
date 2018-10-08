@@ -7,9 +7,16 @@ import com.springboot.dlc.exception.PayException;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultView;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**
@@ -48,11 +55,41 @@ public class GlobalExceptionHandler {
     public ResultView defaultErrorHandler(BindException e){
         FieldError fieldError = e.getFieldError();
         StringBuilder sb = new StringBuilder();
-        sb.append(ResultEnum.CODE_1000.getMsg())
+        sb.append(ResultEnum.CODE_2.getMsg())
                 .append(fieldError.getField()).append("=[")
                 .append(fieldError.getRejectedValue()).append("],")
                 .append(fieldError.getDefaultMessage());
-        return ResultView.error(ResultEnum.CODE_1000.getCode(),sb.toString());
+        return ResultView.error(ResultEnum.CODE_2.getCode(),sb.toString());
+    }
+
+
+    @ExceptionHandler({TypeMismatchException.class})
+    @ResponseBody
+    public ResultView requestTypeMismatch(TypeMismatchException e){
+        e.printStackTrace();
+        return ResultView.error(ResultEnum.CODE_400.getCode(), "参数类型不匹配,参数" + e.getPropertyName() + "类型应该为" + e.getRequiredType());
+    }
+
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    @ResponseBody
+    public ResultView defaultErrorHandler(MissingServletRequestParameterException e){
+        e.printStackTrace();
+        return ResultView.error(ResultEnum.CODE_400.getCode(),"缺少必要参数,参数名称为" + e.getParameterName());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResultView constraintViolationExceptionHandler(ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+        Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
+        StringBuffer sb=new StringBuffer(ResultEnum.CODE_2.getMsg());
+        while (iterator.hasNext()) {
+            ConstraintViolation<?> cvl = iterator.next();
+            sb.append(",");
+            sb.append(cvl.getMessageTemplate());
+            break;
+        }
+        return ResultView.error(ResultEnum.CODE_2.getCode(),sb.toString());
     }
 
     @ExceptionHandler(value = Exception.class)
