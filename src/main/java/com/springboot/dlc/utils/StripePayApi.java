@@ -16,8 +16,10 @@ import java.util.Map;
 
 @Slf4j
 public class StripePayApi {
+
     public static final String PK_LIVE_STRIPE_APIKEY="pk_live_5iF7sC2Or8gWGj0uM7hrzLeT";
     public static final String SK_LIVE_STRIPE_APIKEY = "sk_live_wdP8a3qTvSyEMNGXMipF8CJb";
+
     public static final String PK_TEST_STRIPE_APIKEY = "pk_test_NIqQRZ5NpErPUyKGkop5K11n";
     public static final String SK_TEST_STRIPE_APIKEY = "sk_test_vOCi7U8e5xDXU5eGVRSNCjZ5";
 
@@ -46,7 +48,8 @@ public class StripePayApi {
             if ("succeeded".equals(charge.getStatus())) {
                 log.info("支付成功后的支付标识，可用于退款--保存至数据库当支付流水号:" + charge.getId());
                 log.info("支付结果----" + charge.getStatus());
-                return ResultView.ok();
+
+                return ResultView.ok(charge.getId());
             } else if ("failed".equals(charge.getStatus())) {
                 log.info("拒绝通知结果---" + charge.getOutcome().toJson());
             }

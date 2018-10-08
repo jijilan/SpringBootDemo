@@ -47,12 +47,19 @@ public class PayController {
                                 String stripeTokenType,
                                 String stripeEmail,
                                 String orderId){
+        //token
         log.info(stripeToken);
         log.info(stripeTokenType);
         log.info(stripeEmail);
         //自己的订单号，查询支付金额
         log.info(orderId);
-        return StripePayApi.stripePay(stripeToken,"999",null,null);
+        ResultView resultView=StripePayApi.stripePay(stripeToken,"999",null,null);
+        if (resultView.getCode() == 1){
+            //业务逻辑
+            String id= (String) resultView.getData();
+
+        }
+        return ResultView.ok();
     }
 
     /**
