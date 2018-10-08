@@ -4,8 +4,12 @@ import lombok.Data;
 
 @Data
 public class QPage {
-
-    Integer pageNo=1;
-
-    Integer pageSize=10;
+    /**
+     * 偏移量
+     */
+    Integer offset=1;
+    /**
+     * 限制，限量
+     */
+    Integer limit=10;
 }

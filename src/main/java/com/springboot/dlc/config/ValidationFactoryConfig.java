@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 @Configuration
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 public class ValidationFactoryConfig {
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor(){

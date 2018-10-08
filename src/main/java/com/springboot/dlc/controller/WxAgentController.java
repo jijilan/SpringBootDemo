@@ -55,7 +55,7 @@ public class WxAgentController {
                            @NotBlank(message = "代理商手机号码不能为空")
                            @Length(min = 11,max = 11,message = "手机号码必须为11位数字")
                            @RequestParam String agentPhone) {
-        IPage iPage = new Page(qpage.getPageNo(), qpage.getPageSize());
+        IPage iPage = new Page(qpage.getOffset(), qpage.getLimit());
         IPage page = wxAgentService.page(iPage, null);
         return ResultView.ok(page);
     }
@@ -65,9 +65,9 @@ public class WxAgentController {
      * @param qPage
      * @return
      */
-    @GetMapping("/wx-roles/offset={pageNo}&limit={pageSize}")
+    @GetMapping("/wx-roles")
     public ResultView findAgentAndRole(QPage qPage) {
-        IPage page = wxAgentService.findAgentAndRole(qPage.getPageNo(), qPage.getPageSize());
+        IPage page = wxAgentService.findAgentAndRole(qPage.getOffset(), qPage.getLimit());
         return ResultView.ok(page);
     }
 

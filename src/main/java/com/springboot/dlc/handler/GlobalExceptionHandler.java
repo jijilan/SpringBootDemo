@@ -55,10 +55,7 @@ public class GlobalExceptionHandler {
     public ResultView defaultErrorHandler(BindException e){
         FieldError fieldError = e.getFieldError();
         StringBuilder sb = new StringBuilder();
-        sb.append(ResultEnum.CODE_2.getMsg())
-                .append(fieldError.getField()).append("=[")
-                .append(fieldError.getRejectedValue()).append("],")
-                .append(fieldError.getDefaultMessage());
+        sb.append(ResultEnum.CODE_2.getMsg()).append(fieldError.getDefaultMessage());
         return ResultView.error(ResultEnum.CODE_2.getCode(),sb.toString());
     }
 
@@ -66,14 +63,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({TypeMismatchException.class})
     @ResponseBody
     public ResultView requestTypeMismatch(TypeMismatchException e){
-        e.printStackTrace();
         return ResultView.error(ResultEnum.CODE_400.getCode(), "参数类型不匹配,参数" + e.getPropertyName() + "类型应该为" + e.getRequiredType());
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseBody
     public ResultView defaultErrorHandler(MissingServletRequestParameterException e){
-        e.printStackTrace();
         return ResultView.error(ResultEnum.CODE_400.getCode(),"缺少必要参数,参数名称为" + e.getParameterName());
     }
 
