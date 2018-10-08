@@ -3,11 +3,13 @@ package com.springboot.dlc.controller.system;
 
 import com.github.liujiebang.pay.ali.config.AliConfig;
 import com.github.liujiebang.pay.utils.XMLUtil;
+import com.github.liujiebang.pay.wx.service.WxPayService;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.utils.StripePayApi;
 import com.stripe.exception.StripeException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,8 @@ import java.util.*;
 public class PayController {
 
 
+    @Autowired
+    private WxPayService wxPayService;
     /**
      * 支付
      *
@@ -31,6 +35,7 @@ public class PayController {
      */
     @PostMapping(value = "/front/pay")
     public ResultView pay(HttpServletRequest request, String outTradeNo, String payType) {
+        //wxPayService.wxReturn()
         String userId = (String) request.getAttribute(ResultStatus.USER_ID);
         Map map = null;
         return ResultView.ok(map);
