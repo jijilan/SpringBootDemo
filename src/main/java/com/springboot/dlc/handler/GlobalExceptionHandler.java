@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,12 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultView defaultErrorHandler(MissingServletRequestParameterException e){
         return ResultView.error(ResultEnum.CODE_400.getCode(),"缺少必要参数,参数名称为" + e.getParameterName());
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    public ResultView defaultErrorHandler(HttpRequestMethodNotSupportedException e){
+        return ResultView.error(ResultEnum.CODE_405);
     }
 
     @ResponseBody
