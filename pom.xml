@@ -264,7 +264,7 @@
                                 <unzip src="${dist-tmp}/${app-name}.jar" dest="${dist-tmp}"/>
                                 <delete file="${dist-tmp}/${app-name}.jar"/>
 
-                                <zip destfile="${dist}/${app-name}-pages.jar">
+                                <zip destfile="${dist}/${app-name}-statics.jar">
                                     <zipfileset dir="${dist-tmp}/META-INF" prefix="META-INF"/>
                                     <zipfileset dir="target/classes/static" prefix="static"/>
                                 </zip>
