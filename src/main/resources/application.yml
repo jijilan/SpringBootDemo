@@ -45,3 +45,6 @@ web:
   project-path: http://lizhongsharebed.dlc-sz.com/
   welcome-path: /index.html
   equipment-path: https://lizhongsharebed.dlc-sz.com/downloadQr?equipmentNumber=
+logging:
+  level:
+    com.springboot.dlc: debug
