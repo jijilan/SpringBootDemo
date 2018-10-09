@@ -21,16 +21,13 @@ import org.springframework.web.client.RestTemplate;
  * @Date: 2018/7/2 17:00
  **/
 @Slf4j
-@Data
-@ConfigurationProperties(prefix = "gaode")
-@Component
 public class GaoDeMapUtil {
 
     /**高德应用的地址*/
-    private String key;
+    private static final String GAODE_KEY="84ddb8f66da2b8df6ed7817f5a827abc";
 
     /**地理编码地址*/
-    private static String map_codeurl = "http://restapi.amap.com/v3/geocode/geo";
+    private static final String MAP_CODEURL = "http://restapi.amap.com/v3/geocode/geo";
 
 
     /**
@@ -39,7 +36,7 @@ public class GaoDeMapUtil {
      * @param address
      * @return 返回的类gaodelocation，详见类
      */
-    public String getLocatoin(String address) {
+    public static String getLocatoin(String address) {
         String location = null;
         RestTemplate restTemplate =new RestTemplate();
         if (address != null) {
@@ -47,10 +44,10 @@ public class GaoDeMapUtil {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
                 MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-                params.add("key", key);
+                params.add("key", GAODE_KEY);
                 params.add("address", address);
                 HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(params, headers);
-                JSONObject jsonObject = restTemplate.postForObject(map_codeurl, httpEntity, JSONObject.class);
+                JSONObject jsonObject = restTemplate.postForObject(MAP_CODEURL, httpEntity, JSONObject.class);
                 log.info("高德地图返回结果:" + jsonObject);
                 if(jsonObject.getString("info").equals("OK")&&Integer.valueOf(jsonObject.getString("count"))>=1){
                     JSONArray jsonArray=jsonObject.getJSONArray("geocodes");
@@ -63,10 +60,5 @@ public class GaoDeMapUtil {
             }
         }
         return location;
-    }
-
-    public static void main(String[] args) {
-        String str = "MA216546547654184";
-        System.out.println(str.startsWith("MA"));
     }
 }

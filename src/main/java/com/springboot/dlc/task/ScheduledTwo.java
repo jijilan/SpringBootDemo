@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class ScheduledTwo {
 
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "30 * * * * ?")
     public void executeUploadTask() {
         // 间隔5分钟,执行工单上传任务
         Thread current = Thread.currentThread();

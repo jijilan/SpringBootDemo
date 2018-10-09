@@ -22,6 +22,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <mybatis-plus.version>3.0.3</mybatis-plus.version>
+        <druid.version>1.1.0</druid.version>
+        <jjwt.version>0.7.0</jjwt.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+        <httpcore.version>4.4.1</httpcore.version>
+        <httpmime.version>4.4.1</httpmime.version>
+        <qrcode-sdk.version>3.0.0</qrcode-sdk.version>
+        <liujiebang-pay.version>1.2.4</liujiebang-pay.version>
+        <qiniu-java-sdk.version>[7.2.0, 7.2.99]</qiniu-java-sdk.version>
+        <stripe-java.version>7.0.0</stripe-java.version>
     </properties>
 
     <dependencies>
@@ -70,6 +81,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--热加载-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--undertow-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
         <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>
@@ -80,7 +102,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.0.3</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <!-- Slog4j -->
         <dependency>
@@ -92,98 +114,64 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.0</version>
+            <version>${druid.version}</version>
         </dependency>
         <!--jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.7.0</version>
+            <version>${jjwt.version}</version>
         </dependency>
-        <!--热加载-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!--注册监控-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
         <!--io-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <!--lang3-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <!--httpcore-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.4.1</version>
+            <version>${httpcore.version}</version>
         </dependency>
         <!--httpmime-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.4.1</version>
-        </dependency>
-        <!--undertow-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <version>${httpmime.version}</version>
         </dependency>
         <!--二维码生成-->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
-            <version>3.0.0</version>
+            <version>${qrcode-sdk.version}</version>
         </dependency>
         <!--微信支付宝支付-->
         <dependency>
             <groupId>com.github.liujiebang</groupId>
             <artifactId>pay</artifactId>
-            <version>1.2.3</version>
+            <version>${liujiebang-pay.version}</version>
         </dependency>
         <!--七牛-->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>[7.2.0, 7.2.99]</version>
+            <version>${qiniu-java-sdk.version}</version>
         </dependency>
         <!--stripe-->
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
-            <version>7.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>1.21</version>
+            <version>${stripe-java.version}</version>
         </dependency>
     </dependencies>
-
-    <!--<build>-->
-    <!--<finalName>springboot</finalName>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--<configuration>-->
-    <!--<fork>true</fork>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-
 
     <build>
         <plugins>
@@ -256,25 +244,25 @@
                         </goals>
                         <configuration>
                             <target>
-                                <property name="dist">target/distribution</property>
-                                <property name="dist-tmp">target/distribution/tmp</property>
+                                <property name="dist">target/project</property>
+<!--                                <property name="dist-tmp">target/project/tmp</property>-->
                                 <property name="app-name">${project.artifactId}-${project.version}</property>
-                                <mkdir dir="${dist-tmp}"/>
-                                <copy file="target/${app-name}.jar" tofile="${dist-tmp}/${app-name}.jar"/>
-                                <unzip src="${dist-tmp}/${app-name}.jar" dest="${dist-tmp}"/>
-                                <delete file="${dist-tmp}/${app-name}.jar"/>
-
-                                <zip destfile="${dist}/${app-name}-statics.jar">
+<!--                                <mkdir dir="${dist-tmp}"/>-->
+<!--                                <copy file="target/${app-name}.jar" tofile="${dist-tmp}/${app-name}.jar"/>
+                                <unzip src="${dist-tmp}/${app-name}.jar" dest="${dist-tmp}"/>-->
+<!--                                <delete file="${dist-tmp}/${app-name}.jar"/>-->
+                                    <!--项目前后端分离，不需要生成静态资源的jar-->
+<!--                                <zip destfile="${dist}/${app-name}-statics.jar">
                                     <zipfileset dir="${dist-tmp}/META-INF" prefix="META-INF"/>
                                     <zipfileset dir="target/classes/static" prefix="static"/>
-                                </zip>
+                                </zip>-->
 
                                 <move file="target/${app-name}-classes.jar" todir="${dist}"/>
                                 <move todir="${dist}/3rd-lib">
                                     <fileset dir="target/lib"/>
                                 </move>
 
-                                <delete dir="${dist-tmp}"/>
+<!--                                <delete dir="${dist-tmp}"/>-->
 
                                 <copy todir="${dist}">
                                     <fileset dir="target/classes">

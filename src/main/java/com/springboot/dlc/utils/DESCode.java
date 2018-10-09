@@ -9,10 +9,12 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.util.Locale;
 
 public class DESCode {
-    private static final String key="povckmb84.'!@#!@a13513asssdsgdda770a";
+
+    private static final String key = "povckmb84.'!@#!@a13513asssdsgdda770a";
     public static final String ALGORITHM_DES = "DES/CBC/PKCS5Padding";
+
     public static String encode(String data) {
-        if (data == null){
+        if (data == null) {
             return null;
         }
         try {
@@ -33,10 +35,10 @@ public class DESCode {
 
     public static void main(String[] args) {
         System.out.println(encode("123456"));
-   }
+    }
 
-    public static String decode( String data) {
-        if (data == null){
+    public static String decode(String data) {
+        if (data == null) {
             return null;
         }
         try {
@@ -54,12 +56,13 @@ public class DESCode {
         }
 
     }
+
     private static String byte2String(byte[] b) {
         StringBuilder hs = new StringBuilder();
         String stmp;
-        for (int n =0;b != null && n < b.length; n++) {
+        for (int n = 0; b != null && n < b.length; n++) {
             stmp = Integer.toHexString(b[n] & 0XFF);
-            if (stmp.length() == 1){
+            if (stmp.length() == 1) {
                 hs.append('0');
             }
             hs.append(stmp);
@@ -67,15 +70,15 @@ public class DESCode {
         return hs.toString().toUpperCase(Locale.CHINA);
 
     }
+
     private static byte[] byte2hex(byte[] b) {
-        if ((b.length% 2) != 0){
+        if ((b.length % 2) != 0) {
             throw new IllegalArgumentException();
         }
-        byte[]b2 = new byte[b.length / 2];
-        for (int n = 0;n < b.length; n += 2)
-        {
+        byte[] b2 = new byte[b.length / 2];
+        for (int n = 0; n < b.length; n += 2) {
             String item = new String(b, n, 2);
-            b2[n / 2] = (byte)Integer.parseInt(item, 16);
+            b2[n / 2] = (byte) Integer.parseInt(item, 16);
         }
         return b2;
     }

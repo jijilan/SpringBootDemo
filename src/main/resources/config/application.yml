@@ -1,6 +1,6 @@
 # 服务配置
 server:
-  port: 8080
+  port: 9113
   tomcat:
     uri-encoding: UTF-8
     remote-ip-header: x-forwarded-for

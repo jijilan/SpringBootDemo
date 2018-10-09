@@ -7,6 +7,7 @@ import com.springboot.dlc.exception.PayException;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultView;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -31,73 +32,79 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MyException.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(MyException e){
-        e.printStackTrace();
+    public ResultView defaultErrorHandler(MyException e) {
+        log.error(ExceptionUtils.getStackTrace(e));
         return ResultView.error(e.getResultEnum());
     }
 
     @ExceptionHandler(value = AuthException.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(AuthException e){
-        log.info("--------------------用户未登陆----------------------");
+    public ResultView defaultErrorHandler(AuthException e) {
+        // 记录错误信息
+        log.error(ExceptionUtils.getMessage(e));
         return ResultView.error(e.getResultEnum());
     }
 
     @ExceptionHandler(value = PayException.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(PayException e){
-        e.printStackTrace();
-        return ResultView.error(e.getResultEnum().getCode(),e.getMessage());
+    public ResultView defaultErrorHandler(PayException e) {
+        log.error(ExceptionUtils.getMessage(e));
+        return ResultView.error(e.getResultEnum().getCode(), e.getMessage());
     }
 
 
     @ExceptionHandler(value = BindException.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(BindException e){
+    public ResultView defaultErrorHandler(BindException e) {
+        log.error(ExceptionUtils.getMessage(e));
         FieldError fieldError = e.getFieldError();
         StringBuilder sb = new StringBuilder();
         sb.append(ResultEnum.CODE_2.getMsg()).append(fieldError.getDefaultMessage());
-        return ResultView.error(ResultEnum.CODE_2.getCode(),sb.toString());
+        return ResultView.error(ResultEnum.CODE_2.getCode(), sb.toString());
     }
 
 
     @ExceptionHandler({TypeMismatchException.class})
     @ResponseBody
-    public ResultView requestTypeMismatch(TypeMismatchException e){
+    public ResultView requestTypeMismatch(TypeMismatchException e) {
+        log.error(ExceptionUtils.getMessage(e));
         return ResultView.error(ResultEnum.CODE_400.getCode(), "参数类型不匹配,参数" + e.getPropertyName() + "类型应该为" + e.getRequiredType());
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(MissingServletRequestParameterException e){
-        return ResultView.error(ResultEnum.CODE_400.getCode(),"缺少必要参数,参数名称为" + e.getParameterName());
+    public ResultView defaultErrorHandler(MissingServletRequestParameterException e) {
+        log.error(ExceptionUtils.getMessage(e));
+        return ResultView.error(ResultEnum.CODE_400.getCode(), "缺少必要参数,参数名称为" + e.getParameterName());
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseBody
     public ResultView defaultErrorHandler(HttpRequestMethodNotSupportedException e){
+        log.error(ExceptionUtils.getMessage(e));
         return ResultView.error(ResultEnum.CODE_405);
     }
 
     @ResponseBody
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResultView constraintViolationExceptionHandler(ConstraintViolationException ex) {
-        Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+    public ResultView constraintViolationExceptionHandler(ConstraintViolationException e) {
+        log.error(ExceptionUtils.getMessage(e));
+        Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
-        StringBuffer sb=new StringBuffer(ResultEnum.CODE_2.getMsg());
+        StringBuffer sb = new StringBuffer(ResultEnum.CODE_2.getMsg());
         while (iterator.hasNext()) {
             ConstraintViolation<?> cvl = iterator.next();
             sb.append(",");
             sb.append(cvl.getMessageTemplate());
             break;
         }
-        return ResultView.error(ResultEnum.CODE_2.getCode(),sb.toString());
+        return ResultView.error(ResultEnum.CODE_2.getCode(), sb.toString());
     }
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public ResultView defaultErrorHandler(Exception e){
-        e.printStackTrace();
+    public ResultView defaultErrorHandler(Exception e) {
+        log.error(ExceptionUtils.getStackTrace(e));
         return ResultView.error(ResultEnum.CODE_500);
     }
 

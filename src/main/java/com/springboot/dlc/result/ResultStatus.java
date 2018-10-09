@@ -49,5 +49,12 @@ public class ResultStatus {
     public static final String CASHREQUEST_TOP = "CAS";
     public static final String COUPON_TOP = "COU";
 
+    /**
+     * 设备状态:0.成功 1.异常 2.失败
+     */
+    public static final int MACHINE_CLOUD_STATUS_SUCCESS=0;
 
+    public static final int MACHINE_CLOUD_STATUS_ERROR=1;
+
+    public static final int MACHINE_CLOUD_STATUS_FIAL=2;
 }
