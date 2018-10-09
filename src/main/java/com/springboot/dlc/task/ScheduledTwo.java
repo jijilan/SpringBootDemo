@@ -19,7 +19,7 @@ public class ScheduledTwo {
     public void executeUploadTask() {
         // 间隔5分钟,执行工单上传任务
         Thread current = Thread.currentThread();
-        log.info("定时任务2:{}", current.getId());
-        log.info("ScheduledTest.executeUploadTask 定时任务2:" + current.getId() + ",name:" + current.getName());
+        log.debug("定时任务2:{}", current.getId());
+        log.debug("ScheduledTest.executeUploadTask 定时任务2:" + current.getId() + ",name:" + current.getName());
     }
 }
