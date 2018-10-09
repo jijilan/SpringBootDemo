@@ -38,6 +38,9 @@ mybatis-plus:
         db-type: mysql
         id-type: id_worker
 
+logging:
+  level:
+    com.springboot.dlc: debug
 
 # 公共资源
 web:
@@ -45,6 +48,4 @@ web:
   project-path: http://lizhongsharebed.dlc-sz.com/
   welcome-path: /index.html
   equipment-path: https://lizhongsharebed.dlc-sz.com/downloadQr?equipmentNumber=
-logging:
-  level:
-    com.springboot.dlc: debug
+
