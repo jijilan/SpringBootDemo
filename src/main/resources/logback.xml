@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="logback.logdir" value="/Users/liujiebang/IdeaProjects/springboot-demo/logs/" />
+    <property name="logback.appname" value="app" />
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%date{yyyy-MM-dd HH:mm:ss} | %highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n"/>
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            </encoder>
+    </appender>
+
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <file>${logback.logdir}/info/info.${logback.appname}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logback.logdir}/info/info.${logback.appname}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>90</maxHistory>
+<!--            <totalSizeCap>1GB</totalSizeCap>-->
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+<!--            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>-->
+        </encoder>
+    </appender>
+
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logback.logdir}/error/error.${logback.appname}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logback.logdir}/error/error.${logback.appname}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>90</maxHistory>
+            <!--            <totalSizeCap>1GB</totalSizeCap>-->
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <!--<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>-->
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="consoleLog"/>
+    </root>
+    <logger name="com.springboot.dlc">
+        <appender-ref ref="fileErrorLog"/>
+        <appender-ref ref="fileInfoLog"/>
+    </logger>
+
+</configuration>
