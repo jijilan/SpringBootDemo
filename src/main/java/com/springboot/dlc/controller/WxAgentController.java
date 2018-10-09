@@ -1,6 +1,7 @@
 package com.springboot.dlc.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.dlc.entity.WxAgent;
@@ -13,7 +14,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 
@@ -39,8 +39,8 @@ public class WxAgentController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
-    public ResultView get(@PathVariable String id) {
+    @GetMapping("/get")
+    public ResultView get(String id) {
         WxAgent wxAgent = wxAgentService.getById(id);
         return ResultView.ok(wxAgent);
     }
@@ -56,7 +56,10 @@ public class WxAgentController {
                            @Length(min = 11,max = 11,message = "手机号码必须为11位数字")
                            @RequestParam String agentPhone) {
         IPage iPage = new Page(qpage.getOffset(), qpage.getLimit());
-        IPage page = wxAgentService.page(iPage, null);
+        QueryWrapper qw=new QueryWrapper();
+        qw.eq("agentName",agentName);
+        qw.eq("agentPhone",agentPhone);
+        IPage page = wxAgentService.page(iPage, qw);
         return ResultView.ok(page);
     }
 
@@ -86,7 +89,7 @@ public class WxAgentController {
      * @param id
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("/put")
     public ResultView putById(@PathVariable String id){
 
         return ResultView.ok();
@@ -97,7 +100,7 @@ public class WxAgentController {
      * @param wxAgent
      * @return
      */
-    @PutMapping
+    @PutMapping("/putObj")
     public ResultView putEntity(@Validated WxAgent wxAgent){
 
         return ResultView.ok();
@@ -108,7 +111,7 @@ public class WxAgentController {
      * @param id
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/del")
     public ResultView delById(@PathVariable String id){
 
         return ResultView.ok();

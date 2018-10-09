@@ -52,6 +52,7 @@ public class PayController {
                                 String stripeTokenType,
                                 String stripeEmail,
                                 String orderId){
+        //stripeToken
         //token
         log.info(stripeToken);
         log.info(stripeTokenType);
