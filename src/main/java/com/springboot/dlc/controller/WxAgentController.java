@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.dlc.entity.WxAgent;
+import com.springboot.dlc.model.QKey;
 import com.springboot.dlc.model.QPage;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.IWxAgentService;
@@ -36,12 +37,12 @@ public class WxAgentController {
 
     /**
      * 根据主键查询单个对象
-     * @param id
+     * @param key
      * @return
      */
     @GetMapping("/get")
-    public ResultView get(String id) {
-        WxAgent wxAgent = wxAgentService.getById(id);
+    public ResultView get(@Valid QKey key) {
+        WxAgent wxAgent = wxAgentService.getById(key.getKey());
         return ResultView.ok(wxAgent);
     }
 
@@ -86,12 +87,11 @@ public class WxAgentController {
 
     /**
      * 根据单个值或多个值修改
-     * @param id
+     * @param key
      * @return
      */
     @PutMapping("/put")
-    public ResultView putById(@PathVariable String id){
-
+    public ResultView putById(@Valid QKey key){
         return ResultView.ok();
     }
 
@@ -100,20 +100,20 @@ public class WxAgentController {
      * @param wxAgent
      * @return
      */
-    @PutMapping("/putObj")
-    public ResultView putEntity(@Validated WxAgent wxAgent){
+    @PutMapping("/putEntity")
+    public ResultView putEntity(@Valid WxAgent wxAgent){
 
         return ResultView.ok();
     }
 
     /**
      * 根据主键删除
-     * @param id
+     * @param key
      * @return
      */
     @DeleteMapping("/del")
-    public ResultView delById(@PathVariable String id){
-
+    public ResultView delById(@Valid QKey key){
+        log.info("key:{}",key.getKey());
         return ResultView.ok();
     }
 }
