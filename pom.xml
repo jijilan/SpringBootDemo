@@ -256,7 +256,6 @@
                                     <zipfileset dir="${dist-tmp}/META-INF" prefix="META-INF"/>
                                     <zipfileset dir="target/classes/static" prefix="static"/>
                                 </zip>-->
-
                                 <move file="target/${app-name}-classes.jar" todir="${dist}"/>
                                 <move todir="${dist}/3rd-lib">
                                     <fileset dir="target/lib"/>
