@@ -1,8 +1,13 @@
 package com.springboot.dlc.entity;
 
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
+
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -44,5 +49,6 @@ public class SysRole implements Serializable {
     @TableField("isFlag")
     private Integer isFlag;
 
-
+    @TableField(value = "sysMenuList", exist = false)
+    private List<SysMenu> sysMenuList;
 }

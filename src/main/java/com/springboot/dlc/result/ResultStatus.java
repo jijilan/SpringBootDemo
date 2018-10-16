@@ -28,26 +28,20 @@ public class ResultStatus {
     /**
      * 支付方式（1：支付宝支付 ，2：微信支付）
      */
-    public static final String PAY_TYPE_ALIPAY = "AliPay";
-    public static final String PAY_TYPE_WECHATPAY = "WeChatPay";
+    public static final int PAY_TYPE_ALIPAY = 1;
+    public static final int PAY_TYPE_WECHATPAY = 2;
+
+    /**
+     * 管理员类型(1:超级管理员, 2:普通管理员)
+     */
+    public static final int MANAGER_ADMIN=1;
+    public static final int MANAGER_USER=2;
+
 
     public static final String SUCCESS="SUCCESS";
-
-    public static final String USER_TOP = "US";
-    public static final String EQUIPMENTID_TOP = "EQ";
-    public static final String BATTERY_TOP = "BA";
-    public static final String BUSINESS_TOP = "BUS";
-    public static final String MANAGER_TOP = "MA";
-    public static final String FEEDBACK_TOP = "FE";
-    public static final String RECHARGE_TOP = "RE";
-    public static final String RECHARGE_OUTTRADENO_TOP = "ROG";
-    public static final String ORDER_TOP = "ORD";
-    public static final String OUTTRADENO_TOP = "OUT";
-    public static final String LOSE_TOP = "OLE";
-    public static final String FINANCE_TOP = "FIN";
-    public static final String MESSAGE_TOP = "MES";
-    public static final String CASHREQUEST_TOP = "CAS";
-    public static final String COUPON_TOP = "COU";
+    public static final int JURISDICTION_MODULAR=1;
+    public static final int JURISDICTION_MENU=2;
+    public static final int JURISDICTION_BUTTON=2;
 
     /**
      * 设备状态:0.成功 1.异常 2.失败

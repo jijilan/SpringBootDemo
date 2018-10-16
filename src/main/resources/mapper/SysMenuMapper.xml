@@ -7,4 +7,35 @@
         id, interfaceName, interfaceUrl, pageUrl, fid, interfaceType, orderBy, isFlag
     </sql>
 
+    <update id="setAuthorityByRole">
+        insert into sys_role_menu (roleId,menuId) values
+        <foreach collection="menus" item="item" index="index" separator=",">
+            (#{roleId}, #{item})
+        </foreach>
+    </update>
+
+    <delete id="delAuthorityById">
+        delete from sys_role_menu
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="roleId != null and roleId != ''">
+                and roleId = #{roleId}
+            </if>
+            <if test="menuId != null and menuId != ''">
+                and menuId = #{menuId}
+            </if>
+        </trim>
+    </delete>
+
+    <select id="findModelerByRoleId" resultType="com.springboot.dlc.entity.SysMenu">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu me
+        WHERE me.id IN(SELECT rm.menuId FROM sys_role_menu rm WHERE fid IS NULL
+        <if test="_parameter != null">
+            AND rm.roleId = #{roleId}
+        </if>
+        )
+        ORDER BY me.orderBy ASC
+    </select>
+
 </mapper>

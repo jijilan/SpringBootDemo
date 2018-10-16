@@ -32,6 +32,10 @@ public class ResultView {
     public static ResultView error(Integer code,String message) {
         return new ResultView(code,message);
     }
+
+    public static ResultView error(String errMsg) {
+        return new ResultView(errMsg);
+    }
     private ResultView(){
         this.code=ResultEnum.CODE_1.getCode();
         this.msg=ResultEnum.CODE_1.getMsg();
@@ -50,4 +54,9 @@ public class ResultView {
         this.time=System.currentTimeMillis();
     }
 
+    private ResultView(String errMsg) {
+        this.code=ResultEnum.CODE_2.getCode();
+        this.msg=ResultEnum.CODE_2.getMsg()+errMsg;
+        this.time=System.currentTimeMillis();
+    }
 }

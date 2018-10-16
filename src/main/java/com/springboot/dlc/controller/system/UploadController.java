@@ -2,12 +2,14 @@ package com.springboot.dlc.controller.system;
 
 
 import com.springboot.dlc.exception.MyException;
+import com.springboot.dlc.resources.WebResource;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.utils.QRCodeUtil;
 import com.springboot.dlc.utils.QiniuUtil;
 import com.springboot.dlc.utils.UploadFileUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,14 +29,8 @@ import java.io.IOException;
 @RestController
 public class UploadController {
 
-    @Value("${web.static-resource-path}")
-    private String staticResourcePath;
-
-    @Value("${web.project-path}")
-    protected String projectPath;
-
-    @Value("${web.equipment-path}")
-    protected String equipmentPath;
+    @Autowired
+    private WebResource webResource;
 
     /**
      * @Description 文件上传
@@ -43,7 +39,7 @@ public class UploadController {
      */
     @PostMapping("/sys/fileUpload")
     public ResultView fileUpload(@RequestParam("file") MultipartFile[] file, String fileName) throws MyException {
-        return ResultView.ok(projectPath + UploadFileUtil.flowUpload(file, staticResourcePath, fileName));
+        return ResultView.ok(webResource.getProjectPath() + UploadFileUtil.flowUpload(file, webResource.getStaticResourcePath(), fileName));
     }
 
     /**
@@ -54,7 +50,7 @@ public class UploadController {
         QRCodeUtil createQrcode = new QRCodeUtil();
         //生成二维码
         try {
-            createQrcode.getQrcode(equipmentPath + equipmentNumber, response);
+            createQrcode.getQrcode(webResource.getEquipmentPath() + equipmentNumber, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -49,3 +49,17 @@ web:
   welcome-path: /index.html
   equipment-path: https://lizhongsharebed.dlc-sz.com/downloadQr?equipmentNumber=
 
+# 拦截器资源过滤URL
+interceptor:
+  front-authentication:
+    addPathPatterns: /front/**
+    excludePathPatterns:
+  back-authentication:
+    addPathPatterns: /api/*/back/**
+    excludePathPatterns:
+  back-authorization:
+    addPathPatterns: /api/*/back/**
+    excludePathPatterns: /sys/back/sysManager/getExitLogin,/sys/back/sysManager/updateManagerPwd,/sys/back/sysManager/managerInfo,/sys/back/sysMenu/authority/getAuthorityMenuList
+
+
+

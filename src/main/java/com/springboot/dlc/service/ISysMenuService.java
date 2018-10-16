@@ -1,10 +1,11 @@
 package com.springboot.dlc.service;
 
-import com.springboot.dlc.entity.SysManager;
 import com.springboot.dlc.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.springboot.dlc.result.ResultView;
 
 import java.util.List;
+
 
 /**
  * <p>
@@ -16,5 +17,53 @@ import java.util.List;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
-    List<SysMenu> selectMenuByManager(SysManager sysManager);
+    /**
+     * 设置角色的权限
+     *
+     * @param key
+     * @param menus
+     * @return
+     */
+    ResultView setAuthorityByRole(String key, String[] menus);
+
+    /**
+     * 获取权限菜单列表
+     *
+     * @param managerId
+     * @return
+     */
+    ResultView getAuthorityMenuList(String managerId);
+
+    /**
+     * 删除权限菜单
+     *
+     * @param key
+     * @return
+     */
+    ResultView delMenu(String key);
+
+    /**
+     * 根据父ID查询指定（菜单或按钮）列表
+     *
+     * @param key
+     * @return
+     */
+    List<SysMenu> getMenuByFid(String key);
+
+    /**
+     * 修改权限信息
+     * @param menu
+     * @return
+     */
+    ResultView putMenu(SysMenu menu);
+
+    /**
+     * 根据角色编号查询权限(模块)
+     * @param roleId
+     * @return
+     */
+    List<SysMenu> findModelerByRoleId(String roleId);
+
+
+    List<SysMenu> findRecursionById(String key);
 }

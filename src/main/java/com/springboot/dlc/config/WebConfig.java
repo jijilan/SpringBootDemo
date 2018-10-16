@@ -1,8 +1,12 @@
 package com.springboot.dlc.config;
 
-import com.springboot.dlc.handler.BackLoginInterceptor;
-import com.springboot.dlc.handler.FrontLoginInterceptor;
+import com.springboot.dlc.handler.BackAuthenticationInterceptor;
+import com.springboot.dlc.handler.BackAuthorizationInterceptor;
+import com.springboot.dlc.handler.FrontAuthenticationInterceptor;
+import com.springboot.dlc.resources.InterceptorResource;
+import com.springboot.dlc.resources.WebResource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +26,10 @@ import java.util.List;
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Value("${web.static-resource-path}")
-    private String staticResourcePath;
-
-    @Value("${web.welcome-path}")
-    private String welcomePath;
-
-    @Value("${web.project-path}")
-    private String projectPath;
+    @Autowired
+    private WebResource webResource;
+    @Autowired
+    private InterceptorResource interceptorResource;
 
     /**
      * 拦截器注册
@@ -38,8 +38,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(frontLoginInterceptor()).addPathPatterns("/front/**");
-        registry.addInterceptor(backLoginInterceptor()).addPathPatterns("/back/**");
+        registry.addInterceptor(frontAuthenticationInterceptor())
+                .addPathPatterns(interceptorResource.getFrontAuthenticationAddPathPatterns())
+                .excludePathPatterns(interceptorResource.getFrontAuthenticationExcludePathPatterns());
+        registry.addInterceptor(backAuthenticationInterceptor())
+                .addPathPatterns(interceptorResource.getBackAuthenticationAddPathPatterns())
+                .excludePathPatterns(interceptorResource.getBackAuthenticationExcludePathPatterns());
+        registry.addInterceptor(backAuthorizationInterceptor())
+                .addPathPatterns(interceptorResource.getBackAuthorizationAddPathPatterns())
+                .excludePathPatterns(interceptorResource.getBackAuthorizationExcludePathPatterns());
         super.addInterceptors(registry);
     }
 
@@ -48,24 +55,24 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      *
      * @param registry
      */
-/*    @Override
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
-                .addResourceLocations("file:" + staticResourcePath);
+                .addResourceLocations("file:" + webResource.getStaticResourcePath());
         super.addResourceHandlers(registry);
-    }*/
+    }
 
     /**
-     * 请求重定向
+     * 欢迎页请求重定向
      * --可用来处理微信公众平台或者开放平台获取code操作
      *
      * @param registry
      */
-/*    @Override
+    @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", projectPath + welcomePath);
+        registry.addRedirectViewController("/", webResource.getProjectPath() + webResource.getWelcomePath());
         super.addViewControllers(registry);
-    }*/
+    }
 
     /**
      * 设置HTTP请求报文字符串UTF-8编码格式
@@ -87,13 +94,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    FrontLoginInterceptor frontLoginInterceptor() {
-        return new FrontLoginInterceptor();
+    FrontAuthenticationInterceptor frontAuthenticationInterceptor() {
+        return new FrontAuthenticationInterceptor();
     }
 
     @Bean
-    BackLoginInterceptor backLoginInterceptor() {
-        return new BackLoginInterceptor();
+    BackAuthenticationInterceptor backAuthenticationInterceptor() {
+        return new BackAuthenticationInterceptor();
+    }
+
+    @Bean
+    BackAuthorizationInterceptor backAuthorizationInterceptor() {
+        return new BackAuthorizationInterceptor();
     }
 
 }

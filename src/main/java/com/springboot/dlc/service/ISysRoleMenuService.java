@@ -2,6 +2,7 @@ package com.springboot.dlc.service;
 
 import com.springboot.dlc.entity.SysRoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2018-10-02
  */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
+
+    List<SysRoleMenu> roleMenuListByRoleIdAndMenuId(String roleId,String menuId);
+
 
 }
