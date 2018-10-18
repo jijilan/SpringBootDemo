@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.springboot.dlc.result.ResultView;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -65,5 +66,7 @@ public interface ISysMenuService extends IService<SysMenu> {
     List<SysMenu> findModelerByRoleId(String roleId);
 
 
-    List<SysMenu> findRecursionById(String key);
+    List<SysMenu> findRecursionById(String fid,String roleId,String managerId);
+
+    List<String> getAuthoritysByManager(String managerId);
 }

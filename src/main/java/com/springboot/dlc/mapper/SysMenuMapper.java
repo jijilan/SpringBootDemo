@@ -19,5 +19,9 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     int setAuthorityByRole(@Param("roleId") String roleId, @Param("menus") String[] menus);
 
-    List<SysMenu> findModelerByRoleId(String roleId);
+    List<SysMenu> findModelerByRoleId(@Param("roleId") String roleId);
+
+    List<SysMenu> getMenuListByCondition(@Param("fid") String fid,@Param("roleId") String roleId,@Param("managerId") String managerId);
+
+    List<String> getAuthoritysByManager(@Param("managerId") String managerId);
 }

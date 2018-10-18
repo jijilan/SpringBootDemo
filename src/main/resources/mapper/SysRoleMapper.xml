@@ -7,4 +7,11 @@
         id, roleName, roleNote, ctime, isFlag
     </sql>
 
+    <select id="getRoleListByManager" resultType="com.springboot.dlc.entity.SysRole">
+        select ar.id,ar.roleName,ar.roleNote,ar.ctime,
+        (select count(1) from sys_manager_role amr where amr.roleId = ar.id and amr.managerId = #{managerId})isFlag
+        from sys_role ar
+        order by ar.ctime desc
+    </select>
+
 </mapper>

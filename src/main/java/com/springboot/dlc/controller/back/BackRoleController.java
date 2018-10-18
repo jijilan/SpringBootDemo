@@ -8,6 +8,7 @@ import com.springboot.dlc.entity.SysRole;
 import com.springboot.dlc.model.QKey;
 import com.springboot.dlc.model.QPage;
 import com.springboot.dlc.redis.RedisService;
+import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.ISysMenuService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -63,16 +65,8 @@ public class BackRoleController {
      * @param qKey 角色id
      */
     @GetMapping("/getAuthorityByRole")
-    public ResultView getAuthorityByRole(@Valid QKey qKey, HttpServletRequest request) {
-        //如果是超级管理员-查询所有权限列表
-        String managerId = (String) request.getAttribute(ResultStatus.MANAGER_ID);
-        SysManager sysManager = (SysManager) redisService.get(ResultStatus.PROJECT_NAME + managerId);
-        if (sysManager.getManagerType() == ResultStatus.MANAGER_ADMIN) {
-            return iSysRoleService.getAuthorityByRole(null);
-        } else {
-            return iSysRoleService.getAuthorityByRole((String) qKey.getKey());
-        }
-
+    public ResultView getAuthorityByRole(@Valid QKey qKey) {
+        return iSysRoleService.getAuthorityByRole((String) qKey.getKey());
     }
 
     /**
@@ -85,6 +79,31 @@ public class BackRoleController {
     public ResultView addRole(@NotEmpty(message = "角色名称不能为空") String roleName,
                               @NotEmpty(message = "角色备注信息不能为空") String roleNote) {
         return iSysRoleService.addRole(roleName, roleNote);
+    }
+
+    /**
+     * 修改角色信息
+     *
+     * @param roleName 角色名称
+     * @param roleNote 备注
+     */
+    @PostMapping("/updateRole")
+    public ResultView updateRole(@Valid QKey qKey,
+                                 @NotEmpty(message = "角色名称不能为空") String roleName,
+                                 @NotEmpty(message = "角色备注信息不能为空") String roleNote) {
+        SysRole role = new SysRole()
+                .setId((String) qKey.getKey())
+                .setRoleName(roleName)
+                .setRoleNote(roleNote);
+        return iSysRoleService.updateById(role) ? ResultView.ok() : ResultView.error(ResultEnum.CODE_2);
+    }
+
+    /**
+     * 获取角色信息
+     */
+    @GetMapping("/getRoleInfo")
+    public ResultView getRoleInfo(@Valid QKey qKey) {
+        return ResultView.ok(iSysRoleService.getById(qKey.getKey()));
     }
 
     /**
@@ -105,7 +124,7 @@ public class BackRoleController {
      * @Description 设置角色权限
      */
     @PutMapping("/setAuthorityByRole")
-    public ResultView setAuthorityByRole(@Valid QKey qKey, @NotBlank(message = "菜单编号不能为空") String... menus) {
+    public ResultView setAuthorityByRole(@Valid QKey qKey, @NotNull(message = "菜单编号不能为空") String... menus) {
         return iSysMenuService.setAuthorityByRole((String) qKey.getKey(), menus);
     }
 }

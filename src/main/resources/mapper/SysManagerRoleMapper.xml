@@ -7,4 +7,11 @@
         id, roleId, managerId
     </sql>
 
+    <insert id="setRoleByManager">
+        insert into sys_manager_role (managerId,roleId) values
+        <foreach collection="roleIds" item="item" index="index" separator=",">
+            (#{managerId}, #{item})
+        </foreach>
+    </insert>
+
 </mapper>

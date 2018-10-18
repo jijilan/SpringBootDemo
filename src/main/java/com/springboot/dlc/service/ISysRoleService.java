@@ -4,6 +4,8 @@ import com.springboot.dlc.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.springboot.dlc.result.ResultView;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -40,4 +42,12 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return
      */
     ResultView getAuthorityByRole(String key);
+
+    /**
+     * 获取管理员的角色列表
+     *
+     * @param managerId
+     * @return
+     */
+    List<SysRole> getRoleListByManager(String managerId);
 }

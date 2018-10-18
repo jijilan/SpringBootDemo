@@ -2,6 +2,7 @@ package com.springboot.dlc.mapper;
 
 import com.springboot.dlc.entity.SysManagerRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysManagerRoleMapper extends BaseMapper<SysManagerRole> {
 
+    int setRoleByManager(@Param("managerId") String managerId, @Param("roleIds") String[] roleIds);
 }

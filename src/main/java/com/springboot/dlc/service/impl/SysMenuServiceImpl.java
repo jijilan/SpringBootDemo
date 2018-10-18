@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -41,9 +43,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public ResultView getAuthorityMenuList(String managerId) {
-
-        return null;
+        //获取所有模块
+        List<SysMenu> menuList = baseMapper.getMenuListByCondition(null, null, managerId);
+        //拿到所有列表和按钮
+        if (menuList != null && menuList.size() > 0) {
+            for (int i = 0; i < menuList.size(); i++) {
+                menuList.get(i).setSysMenuList(findRecursionById(menuList.get(i).getId(),null,managerId));
+            }
+        }
+        return ResultView.ok(menuList);
     }
+
+
 
     @Transactional(rollbackFor = MyException.class)
     @Override
@@ -83,14 +94,25 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> findRecursionById(String key) {
-        List<SysMenu> sysMenuList = getMenuByFid(key);
-        if (key != null && sysMenuList != null && sysMenuList.size() > 0) {
+    public List<SysMenu> findRecursionById(String fid,String roleId,String managerId) {
+        List<SysMenu> sysMenuList = baseMapper.getMenuListByCondition(fid,roleId,managerId);
+        if (fid != null && sysMenuList != null && sysMenuList.size() > 0) {
             for (SysMenu menu : sysMenuList) {
-                menu.setSysMenuList(findRecursionById(menu.getId()));
+                menu.setSysMenuList(findRecursionById(menu.getId(),roleId,managerId));
             }
         }
         return sysMenuList;
+    }
+
+    /**
+     * @Description 获取管理员的接口权限集合
+     * @Date 2018/8/20 20:32
+     * @Author liangshihao
+     */
+    @Override
+    public List<String> getAuthoritysByManager(String managerId) {
+        List<String> sysAuthorityByManager = baseMapper.getAuthoritysByManager(managerId);
+        return sysAuthorityByManager;
     }
 
     /**

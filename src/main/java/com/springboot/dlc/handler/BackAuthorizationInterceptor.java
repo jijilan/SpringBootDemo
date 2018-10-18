@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,7 +41,7 @@ public class BackAuthorizationInterceptor implements HandlerInterceptor {
         if (manager != null && manager.getManagerType() == 1) {
             return true;
         }
-        Set<String> authorityList = (Set<String>) redisService.get(ResultStatus.PROJECT_NAME + managerId);
+        List<String> authorityList = (List<String>) redisService.get(ResultStatus.AUTHORITY + managerId);
         if (authorityList.contains(requestURI)) {
             return true;
         } else {

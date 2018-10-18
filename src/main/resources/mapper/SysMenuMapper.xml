@@ -28,14 +28,46 @@
 
     <select id="findModelerByRoleId" resultType="com.springboot.dlc.entity.SysMenu">
         SELECT
-        <include refid="Base_Column_List"/>
+        me.id, interfaceName, interfaceUrl, pageUrl, fid, interfaceType, orderBy,
+        (select count(1) from sys_role_menu rm where rm.roleId = #{roleId} and me.id = rm.menuId)isFlag
         FROM sys_menu me
-        WHERE me.id IN(SELECT rm.menuId FROM sys_role_menu rm WHERE fid IS NULL
-        <if test="_parameter != null">
-            AND rm.roleId = #{roleId}
-        </if>
-        )
+        WHERE me.interfaceType = 1
         ORDER BY me.orderBy ASC
+    </select>
+
+    <select id="getMenuListByCondition" resultType="com.springboot.dlc.entity.SysMenu">
+        select am.id, interfaceName, interfaceUrl, pageUrl, fid, interfaceType, orderBy
+        <if test="roleId != null and roleId != ''">
+            ,(select count(1) from sys_role_menu rm where rm.roleId = #{roleId} and am.id = rm.menuId)isFlag
+        </if>
+        <if test="managerId != null and managerId != ''">
+            ,(SELECT count(1) from
+                (SELECT DISTINCT menuId FROM sys_manager_role amr,sys_role_menu arm WHERE amr.managerId = #{managerId} AND amr.roleId = arm.roleId) aaa
+              WHERE aaa.menuId = am.id) isFlag
+        </if>
+        from sys_menu am where am.isFlag = 1
+        <if test="fid == null">
+            AND am.interfaceType = 1
+        </if>
+        <if test="fid != null">
+            AND am.fid = #{fid}
+        </if>
+        ORDER BY am.orderBy ASC
+    </select>
+
+    <select id="getAuthoritysByManager" resultType="String">
+        SELECT DISTINCT
+            am.interfaceUrl
+        FROM
+            sys_manager_role amr,
+            sys_role_menu arm,
+            sys_menu am
+        WHERE
+            amr.managerId = #{managerId}
+        AND amr.roleId = arm.roleId
+        AND am.id = arm.menuId
+        AND am.isFlag = 1
+        AND am.interfaceUrl IS NOT NULL
     </select>
 
 </mapper>

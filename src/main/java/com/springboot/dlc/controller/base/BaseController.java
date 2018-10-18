@@ -3,6 +3,7 @@ package com.springboot.dlc.controller.base;
 import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.jwt.JwtUtil;
 import com.springboot.dlc.redis.RedisService;
+import com.springboot.dlc.resources.WebResource;
 import com.springboot.dlc.result.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +18,9 @@ public class BaseController {
     protected JwtData jwtData;
     @Autowired
     protected RedisService redisService;
+
+    @Autowired
+    private WebResource webResource;
 
     /**
      * 生成token
