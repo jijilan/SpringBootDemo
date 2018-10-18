@@ -91,7 +91,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("managerId", managerId);
         if (iSysManagerRoleService.remove(queryWrapper) && iSysManagerRoleService.setRoleByManager(managerId, roleIds) > 0) {
-            return ResultView.ok() ;
+            return ResultView.ok();
         }
         new MyException(ResultEnum.CODE_2);
         return ResultView.error(ResultEnum.CODE_2);
