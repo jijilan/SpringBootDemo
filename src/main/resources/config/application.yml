@@ -35,7 +35,7 @@ mybatis-plus:
   global-config:
       refresh: true
       db-config:
-        field-strategy: not_null
+        field-strategy: not_empty
         db-type: mysql
         id-type: id_worker
 

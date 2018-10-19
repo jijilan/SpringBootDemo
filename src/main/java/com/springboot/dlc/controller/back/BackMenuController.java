@@ -126,7 +126,7 @@ public class BackMenuController {
             if (StringUtils.isEmpty(menu.getFid())) {
                 errMeg = "父权限不能为空";
             }
-            if (StringUtils.isEmpty(errMeg)) {
+            if (!StringUtils.isEmpty(errMeg)) {
                 return ResultView.error(errMeg);
             }
         }

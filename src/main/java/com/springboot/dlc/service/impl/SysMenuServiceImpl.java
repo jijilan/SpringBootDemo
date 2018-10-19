@@ -7,10 +7,12 @@ import com.springboot.dlc.entity.SysRoleMenu;
 import com.springboot.dlc.exception.MyException;
 import com.springboot.dlc.mapper.SysMenuMapper;
 import com.springboot.dlc.result.ResultEnum;
+import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.ISysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springboot.dlc.service.ISysRoleMenuService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +74,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenu> getMenuByFid(String key) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("fid", key);
+        if (StringUtils.isEmpty(key)){
+            queryWrapper.eq("interfaceType",ResultStatus.INTERFACETYPE_1);
+        }else {
+            queryWrapper.eq("fid", key);
+        }
         queryWrapper.orderByAsc("orderBy");
         return list(queryWrapper);
     }
@@ -82,7 +88,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public ResultView putMenu(SysMenu menu) {
         SysMenu sysMenu = getById(menu.getId());
         //需要判断当前权限是否在降低权限操作
-        if (sysMenu.getInterfaceType() >= menu.getInterfaceType()) {
+        if (sysMenu.getInterfaceType() < menu.getInterfaceType()) {
             checkMenuLowerLevel(menu.getId());
         }
         return updateById(menu) ? ResultView.ok() : ResultView.error(ResultEnum.CODE_2);
