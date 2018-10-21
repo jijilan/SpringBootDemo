@@ -1,11 +1,14 @@
 package com.springboot.dlc.controller.base;
 
+import com.springboot.dlc.exception.MyException;
 import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.jwt.JwtUtil;
 import com.springboot.dlc.redis.RedisService;
 import com.springboot.dlc.resources.WebResource;
+import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.RedisConnectionFailureException;
 
 /**
  * @auther: liujiebang
@@ -37,7 +40,7 @@ public class BaseController {
                 jwtData.getName(),
                 jwtData.getExpiresSecond(),
                 jwtData.getBase64Secret());
-        redisService.set(ResultStatus.PROJECT_NAME+uniqueId, obj, ResultStatus.TONKEN_OUT_TIME);
+            redisService.set(ResultStatus.PROJECT_NAME + uniqueId, obj, ResultStatus.TONKEN_OUT_TIME);
         return jwtToken;
     }
 }

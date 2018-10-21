@@ -6,14 +6,15 @@ import com.springboot.dlc.exception.AuthException;
 import com.springboot.dlc.redis.RedisService;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
+import com.springboot.dlc.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @auther: liujiebang
@@ -35,13 +36,12 @@ public class BackAuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         //请求资源路径
         String requestURI = request.getRequestURI();
-        String managerId = (String) request.getAttribute(ResultStatus.MANAGER_ID);
-        SysManager manager = (SysManager) redisService.get(ResultStatus.PROJECT_NAME + managerId);
+        SysManager manager = (SysManager) request.getAttribute(ResultStatus.MANAGER);
         //超级管理员直接放行
         if (manager != null && manager.getManagerType() == 1) {
             return true;
         }
-        List<String> authorityList = (List<String>) redisService.get(ResultStatus.AUTHORITY + managerId);
+        List<String> authorityList = (List<String>) redisService.get(ResultStatus.AUTHORITY + manager.getManagerId());
         if (authorityList.contains(requestURI)) {
             return true;
         } else {

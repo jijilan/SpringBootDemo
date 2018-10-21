@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.dlc.entity.WxAgent;
-import com.springboot.dlc.model.QKey;
+import com.springboot.dlc.model.QSKey;
 import com.springboot.dlc.model.QPage;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.IWxAgentService;
@@ -43,7 +43,7 @@ public class WxAgentController {
      * @return
      */
     @GetMapping("/get")
-    public ResultView get(@Valid QKey key) {
+    public ResultView get(@Valid QSKey key) {
         WxAgent wxAgent = wxAgentService.getById(key.getKey());
         return ResultView.ok(wxAgent);
     }
@@ -97,7 +97,7 @@ public class WxAgentController {
      * @return
      */
     @PutMapping("/put")
-    public ResultView putById(@Valid QKey key) {
+    public ResultView putById(@Valid QSKey key) {
         return ResultView.ok();
     }
 
@@ -120,7 +120,7 @@ public class WxAgentController {
      * @return
      */
     @DeleteMapping("/del")
-    public ResultView delById(@Valid QKey key) {
+    public ResultView delById(@Valid QSKey key) {
         log.info("key:{}", key.getKey());
         return ResultView.ok();
     }

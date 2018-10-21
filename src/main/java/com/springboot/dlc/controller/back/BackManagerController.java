@@ -6,14 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.dlc.controller.base.BaseController;
 import com.springboot.dlc.entity.SysManager;
-import com.springboot.dlc.model.QKey;
+import com.springboot.dlc.model.QSKey;
 import com.springboot.dlc.model.QPage;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
-import com.springboot.dlc.service.ISysManagerRoleService;
 import com.springboot.dlc.service.ISysManagerService;
-import com.springboot.dlc.service.ISysRoleService;
 import com.springboot.dlc.utils.DESCode;
 import com.springboot.dlc.utils.IdentityUtil;
 import org.hibernate.validator.constraints.Length;
@@ -35,16 +33,12 @@ import java.util.Date;
  * @since 2018-10-02
  */
 @RestController
-@RequestMapping("/api/sys-manager")
+@RequestMapping("/api/sys-manager/back")
 @Validated
 public class BackManagerController extends BaseController {
 
     @Autowired
     private ISysManagerService iSysManagerService;
-    @Autowired
-    private ISysRoleService iSysRoleService;
-    @Autowired
-    private ISysManagerRoleService iSysManagerRoleService;
 
     /**
      * 后台登录
@@ -69,7 +63,7 @@ public class BackManagerController extends BaseController {
      * @param request
      * @return
      */
-    @PutMapping(value = "/back/updatePwd")
+    @PutMapping(value = "/updatePwd")
     public ResultView updatePwd(HttpServletRequest request, @NotEmpty(message = "原密码不能为空") String oldPassWord,
                                 @NotEmpty(message = "新密码不能为空") @Length(min = 6, max = 20, message = "密码须在长度6-20位之间") String passWord) {
         String managerId = (String) request.getAttribute(ResultStatus.MANAGER_ID);
@@ -82,7 +76,7 @@ public class BackManagerController extends BaseController {
      * @param request
      * @return
      */
-    @GetMapping(value = "/back/logout")
+    @GetMapping(value = "/logout")
     public ResultView logout(HttpServletRequest request) {
         String managerId = (String) request.getAttribute(ResultStatus.MANAGER_ID);
         redisService.del(ResultStatus.PROJECT_NAME + managerId);
@@ -97,7 +91,7 @@ public class BackManagerController extends BaseController {
      * @param username
      * @return
      */
-    @PostMapping("/back/addManager")
+    @PostMapping("/addManager")
     public ResultView addManager(@NotEmpty(message = "账号不能为空") String account, @NotEmpty(message = "名称不能为空") String username
             , @NotEmpty(message = "密码不能为空") @Length(min = 6, max = 20, message = "密码须在长度6-20位之间") String password) {
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -121,7 +115,7 @@ public class BackManagerController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/back/getManagetList")
+    @GetMapping("/getManagetList")
     public ResultView getManagetList(@Valid QPage qPage) {
         IPage<SysManager> iPage = new Page(qPage.getOffset(), qPage.getLimit());
         IPage<SysManager> page = iSysManagerService.page(iPage, null);
@@ -134,9 +128,9 @@ public class BackManagerController extends BaseController {
      * @param qKey
      * @return
      */
-    @DeleteMapping("/back/delManager")
-    public ResultView delManager(@Valid QKey qKey) {
-        return iSysManagerService.delManager((String)qKey.getKey());
+    @DeleteMapping("/delManager")
+    public ResultView delManager(@Valid QSKey qKey) {
+        return iSysManagerService.delManager((String) qKey.getKey());
     }
 
     /**
@@ -146,7 +140,7 @@ public class BackManagerController extends BaseController {
      * @param userName
      * @return
      */
-    @PutMapping(value = "/back/updateManager")
+    @PutMapping(value = "/updateManager")
     public ResultView updateManager(@NotEmpty(message = "管理员id不能为空") String managerId, @NotEmpty(message = "用户名称不能为空") String userName) {
         SysManager manager = new SysManager().setManagerId(managerId).setUserName(userName);
         return iSysManagerService.updateById(manager) ? ResultView.ok() : ResultView.error(ResultEnum.CODE_2);
@@ -158,8 +152,8 @@ public class BackManagerController extends BaseController {
      * @param qKey 管理员id
      * @return
      */
-    @GetMapping("/back/getRoleListByManager")
-    public ResultView getRoleListByManager(@Valid QKey qKey) {
+    @GetMapping("/getRoleListByManager")
+    public ResultView getRoleListByManager(@Valid QSKey qKey) {
         return ResultView.ok(iSysManagerService.getSysRoleListByManager((String) qKey.getKey()));
     }
 
@@ -170,8 +164,8 @@ public class BackManagerController extends BaseController {
      * @param roleIds
      * @return
      */
-    @PutMapping("/back/setRoleByManager")
-    public ResultView setRoleByManager(@Valid QKey qKey, @NotEmpty(message = "角色集合不能为空") String... roleIds) {
+    @PutMapping("/setRoleByManager")
+    public ResultView setRoleByManager(@Valid QSKey qKey, @NotEmpty(message = "角色集合不能为空") String... roleIds) {
         return iSysManagerService.setRoleByManager((String) qKey.getKey(), roleIds);
     }
 

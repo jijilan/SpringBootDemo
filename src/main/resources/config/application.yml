@@ -1,6 +1,6 @@
 # 服务配置
 server:
-  port: 9113
+  port: 80
   tomcat:
     uri-encoding: UTF-8
     remote-ip-header: x-forwarded-for
@@ -57,10 +57,10 @@ interceptor:
     excludePathPatterns:
   back-authentication:
     addPathPatterns: /api/*/back/**
-    excludePathPatterns:
+    excludePathPatterns: /api/sys-manager/back/login
   back-authorization:
     addPathPatterns: /api/*/back/**
-    excludePathPatterns: /api/sys-manager/back/updatePwd,/api/sys-manager/back/logout,/api/sys-menu/back/getMenuList,/api/sys-role/back/getRoleInfo,/api/sys-menu/back/getMenuById
+    excludePathPatterns: /api/sys-manager/back/login,/api/sys-manager/back/updatePwd,/api/sys-manager/back/logout,/api/sys-menu/back/getMenuList,/api/sys-role/back/getRoleInfo,/api/sys-menu/back/getMenuById
 
 
 

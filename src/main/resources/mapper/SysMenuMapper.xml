@@ -55,7 +55,7 @@
         ORDER BY am.orderBy ASC
     </select>
 
-    <select id="getAuthoritysByManager" resultType="String">
+    <select id="getAuthoritysByManager" resultType="java.lang.String">
         SELECT DISTINCT
             am.interfaceUrl
         FROM

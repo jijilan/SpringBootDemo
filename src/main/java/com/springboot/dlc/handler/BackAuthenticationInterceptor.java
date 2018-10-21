@@ -1,8 +1,6 @@
 package com.springboot.dlc.handler;
 
 import com.alibaba.druid.util.StringUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.springboot.dlc.entity.SysManager;
 import com.springboot.dlc.exception.AuthException;
 import com.springboot.dlc.jwt.JwtData;
@@ -39,11 +37,13 @@ public class BackAuthenticationInterceptor implements HandlerInterceptor {
         } else {
             try {
                 String managerId = JwtUtil.getUniqueId(request, jwtData, token, ResultStatus.MANAGER_ID);
+
                 /**后台授权拦截业务逻辑部分*/
                 SysManager sysManager = (SysManager) redisService.get(ResultStatus.PROJECT_NAME + managerId);
-                if (sysManager.getIsFlag() == 2) {
+                if (sysManager.getIsFlag() == ResultStatus.ISFLAG_N) {
                     throw new AuthException(ResultEnum.CODE_9);
                 }
+                request.setAttribute(ResultStatus.MANAGER,sysManager);
                 request.setAttribute(ResultStatus.MANAGER_ID, managerId);
             } catch (NullPointerException e) {
                 throw new AuthException(ResultEnum.CODE_403);

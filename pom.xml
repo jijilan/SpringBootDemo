@@ -81,12 +81,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--热加载-->
-        <dependency>
+        <!--热加载:会缓存对象造成redis反序列化失败-->
+<!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
         <!--undertow-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

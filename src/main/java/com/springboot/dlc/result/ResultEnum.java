@@ -46,6 +46,7 @@ public enum ResultEnum {
     CODE_1006(1006,"开锁失败！"),
     CODE_1007(1007,"设备不在线！"),
     CODE_1008(1008,"设备响应超时！"),
+    CODE_1015(1015,"缓存服务器连接失败！"),
     CODE_9999(9999, "服务器无法处理请求！");
 
     private Integer code;

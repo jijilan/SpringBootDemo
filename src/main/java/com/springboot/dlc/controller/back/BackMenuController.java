@@ -2,22 +2,18 @@ package com.springboot.dlc.controller.back;
 
 
 import com.springboot.dlc.entity.SysMenu;
-import com.springboot.dlc.model.QKey;
+import com.springboot.dlc.model.QSKey;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
 import com.springboot.dlc.service.ISysMenuService;
-
 import java.util.List;
-
 import com.springboot.dlc.utils.IdentityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -64,14 +60,14 @@ public class BackMenuController {
     @PostMapping("/addMenu")
     public ResultView addAuthorityMenu(@NotBlank(message = "菜单接口名称不能为空") String interfaceName,
                                        @NotNull(message = "菜单接口类型不能为空") Integer interfaceType,
-                                       String fid,String interfaceUrl, String pageUrl,
+                                       String fid, String interfaceUrl, String pageUrl,
                                        @RequestParam(value = "orderBy", required = false, defaultValue = "99") Integer orderBy) {
         //为菜单时就必须传入fid和url
-        if (interfaceType != ResultStatus.INTERFACETYPE_1){
-            if (StringUtils.isEmpty(fid)){
+        if (interfaceType != ResultStatus.INTERFACETYPE_1) {
+            if (StringUtils.isEmpty(fid)) {
                 return ResultView.error("父id不能为空");
             }
-            if (StringUtils.isEmpty(interfaceUrl)){
+            if (StringUtils.isEmpty(interfaceUrl)) {
                 return ResultView.error("接口地址不能为空");
             }
         }
@@ -105,7 +101,7 @@ public class BackMenuController {
      * @param key 菜单id
      */
     @GetMapping("/getMenuById")
-    public ResultView getMenuInfoById(@Valid QKey key) {
+    public ResultView getMenuInfoById(@Valid QSKey key) {
         return ResultView.ok(iSysMenuService.getById(key.getKey()));
     }
 
@@ -140,7 +136,7 @@ public class BackMenuController {
      * @return
      */
     @DeleteMapping("/delMenu")
-    public ResultView delMenu(@Valid QKey qKey) {
+    public ResultView delMenu(@Valid QSKey qKey) {
         return iSysMenuService.delMenu((String) qKey.getKey());
     }
 }
