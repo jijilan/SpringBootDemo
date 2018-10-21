@@ -113,5 +113,5 @@ public class JSONUtil {
     public static JSONArray jsonToJSONArray(String jsonStr) {
         return JSON.parseArray(jsonStr);
     }
-    
+
 }
