@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 请求或端口绑定异常
+     * 获取bindingResult中的错误信息
      *
      * @param e
      * @return
