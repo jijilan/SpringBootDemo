@@ -35,7 +35,7 @@ public class DruidConfig {
     @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
 
-    @Value("#{'${spring.datasource.connectionInitSqls}'.split(',')}")
+    @Value("#{'${spring.datasource.connectionInitSqls}'.split(';')}")
     private List<String> connectionInitSqls;
 
     @Value("${spring.datasource.initialSize}")

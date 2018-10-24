@@ -1,8 +1,12 @@
 package com.springboot.dlc.controller.system;
 
 
+import com.alipay.api.internal.util.AlipaySignature;
 import com.github.liujiebang.pay.ali.config.AliConfig;
+import com.github.liujiebang.pay.ali.config.AliPayConfig;
+import com.github.liujiebang.pay.utils.IdentityUtil;
 import com.github.liujiebang.pay.utils.XMLUtil;
+import com.github.liujiebang.pay.wx.config.WxConfig;
 import com.github.liujiebang.pay.wx.service.WxPayService;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
@@ -27,6 +31,12 @@ public class PayController {
 
     @Autowired
     private WxPayService wxPayService;
+
+    @Autowired
+    private WxConfig wxConfig;
+
+    @Autowired
+    private AliPayConfig aliPayConfig;
 
     /**
      * 支付
@@ -91,11 +101,15 @@ public class PayController {
     public String zfbNotify(HttpServletRequest request) {
         try {
             Map<String, String> map = XMLUtil.aliPayNotify(request);
-            if (AliConfig.TradeStatus.TRADE_SUCCESS.equals(map.get("trade_status"))) {
-                String outTradeNo = map.get("out_trade_no");
-                System.out.println("支付宝回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
-                pay(outTradeNo, ResultStatus.PAY_TYPE_ALIPAY);
-                return "success";
+            if (AliConfig.PayStatus.TRADE_SUCCESS.equals(map.get("trade_status"))) {
+                //验签
+                boolean flag = AlipaySignature.rsaCheckV2(map, aliPayConfig.getAlipayPublicKey(), aliPayConfig.getCharset(), aliPayConfig.getSignType());
+                if (flag) {
+                    String outTradeNo = map.get("out_trade_no");
+                    System.out.println("支付宝回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
+                    pay(outTradeNo, ResultStatus.PAY_TYPE_ALIPAY);
+                    return "success";
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,11 +131,15 @@ public class PayController {
             Map<String, String> map = XMLUtil.wxPayNotify(request);
             if (ResultStatus.SUCCESS.equals(map.get("return_code"))
                     && ResultStatus.SUCCESS.equals(map.get("result_code"))) {
-                String outTradeNo = map.get("out_trade_no");
-                System.out.println("微信回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
-                pay(outTradeNo, ResultStatus.PAY_TYPE_WECHATPAY);
-                return XMLUtil.setWechatXml("SUCCESS", "OK");
-
+                //验签
+                if (IdentityUtil.inspectionSign(map, wxConfig.getWxSpMchKey())) {
+                    String outTradeNo = map.get("out_trade_no");
+                    System.out.println("微信回调订单号－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－" + outTradeNo);
+                    pay(outTradeNo, ResultStatus.PAY_TYPE_WECHATPAY);
+                    return XMLUtil.setWechatXml("SUCCESS", "OK");
+                } else {
+                    return XMLUtil.setWechatXml("FAIL", "验签失败");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,7 +157,6 @@ public class PayController {
      * @param payType    支付类型
      */
     private void pay(String outTradeNo, int payType) {
-
         String sub = outTradeNo.substring(0, 3);
     }
 

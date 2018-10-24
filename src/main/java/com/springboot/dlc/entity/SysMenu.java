@@ -54,7 +54,7 @@ public class SysMenu implements Serializable {
     /**
      * 接口类型(1:模块 2:菜单 3:按钮)
      */
-    @NotEmpty(message = "接口类型不能为空")
+    @NotNull(message = "接口类型不能为空")
     @TableField("interfaceType")
     private Integer interfaceType;
 
