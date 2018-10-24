@@ -9,6 +9,7 @@ import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * @auther: liujiebang
@@ -21,9 +22,8 @@ public class BaseController {
     protected JwtData jwtData;
     @Autowired
     protected RedisService redisService;
-
     @Autowired
-    private WebResource webResource;
+    protected WebResource webResource;
 
     /**
      * 生成token

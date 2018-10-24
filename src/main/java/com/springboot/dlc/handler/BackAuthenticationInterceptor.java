@@ -43,7 +43,7 @@ public class BackAuthenticationInterceptor implements HandlerInterceptor {
                 if (sysManager.getIsFlag() == ResultStatus.ISFLAG_N) {
                     throw new AuthException(ResultEnum.CODE_9);
                 }
-                request.setAttribute(ResultStatus.MANAGER,sysManager);
+                request.setAttribute(ResultStatus.MANAGER, sysManager);
                 request.setAttribute(ResultStatus.MANAGER_ID, managerId);
             } catch (NullPointerException e) {
                 throw new AuthException(ResultEnum.CODE_403);

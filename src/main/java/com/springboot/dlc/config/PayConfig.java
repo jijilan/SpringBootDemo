@@ -14,11 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 
 /**
  * @Author: liujiebang
- * @Description: 微信支付授权,支付宝支付配置类
+ * @Description: 微信支付授权, 支付宝支付配置类
  * @Date: 2018/6/27 15:05
  **/
 @Data

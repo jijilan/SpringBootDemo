@@ -7,6 +7,7 @@ import com.springboot.dlc.redis.RedisService;
 import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,7 @@ import java.util.List;
  * @Date: Create in 2018/8/14
  * @Description: 后台授权
  **/
+@Slf4j
 public class BackAuthorizationInterceptor implements HandlerInterceptor {
 
 

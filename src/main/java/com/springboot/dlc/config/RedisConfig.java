@@ -16,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
@@ -55,22 +56,20 @@ public class RedisConfig extends CachingConfigurerSupport {
     private int minIdle;
     @Value("${spring.redis.timeout}")
     private int timeout;
-
     @Bean
     public RedisTemplate<Serializable, Serializable> redisTemplate(
             JedisConnectionFactory redisConnectionFactory) {
-        log.info("------------------------------------------");
-        log.info("-----------------local redis--------------");
-        log.info("------------------------------------------");
-
         RedisTemplate<Serializable, Serializable> redisTemplate = new RedisTemplate<Serializable, Serializable>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-/*        redisTemplate.afterPropertiesSet();
-        redisTemplate.opsForValue().get(ResultStatus.PROJECT_NAME);*/
+        redisTemplate.afterPropertiesSet();
+        redisTemplate.opsForValue().get(ResultStatus.PROJECT_NAME);
+        log.info("-------------------------------------------------");
+        log.info("---------------local redis success---------------");
+        log.info("-------------------------------------------------");
         return redisTemplate;
     }
 

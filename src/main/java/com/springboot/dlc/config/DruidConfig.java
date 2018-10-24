@@ -84,7 +84,6 @@ public class DruidConfig {
     @Primary
     public DataSource dataSource(){
         DruidDataSource datasource = new DruidDataSource();
-
         datasource.setUrl(dbUrl);
         datasource.setUsername(username);
         datasource.setPassword(password);
@@ -109,6 +108,9 @@ public class DruidConfig {
         } catch (SQLException e) {
             log.info("druid configuration initialization filter{}",e);
         }
+        log.info("-------------------------------------------------");
+        log.info("---------------local druid success---------------");
+        log.info("-------------------------------------------------");
         return datasource;
     }
 

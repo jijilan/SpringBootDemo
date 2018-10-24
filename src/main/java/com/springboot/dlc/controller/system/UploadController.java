@@ -1,6 +1,7 @@
 package com.springboot.dlc.controller.system;
 
 
+import com.springboot.dlc.controller.base.BaseController;
 import com.springboot.dlc.exception.MyException;
 import com.springboot.dlc.resources.WebResource;
 import com.springboot.dlc.result.ResultEnum;
@@ -27,10 +28,7 @@ import java.io.IOException;
  **/
 @Slf4j
 @RestController
-public class UploadController {
-
-    @Autowired
-    private WebResource webResource;
+public class UploadController extends BaseController{
 
     /**
      * @Description 文件上传

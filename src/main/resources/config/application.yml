@@ -38,7 +38,7 @@ mybatis-plus:
         field-strategy: not_empty
         db-type: mysql
         id-type: id_worker
-
+      banner: false
 logging:
   level:
     com.springboot.dlc: debug
