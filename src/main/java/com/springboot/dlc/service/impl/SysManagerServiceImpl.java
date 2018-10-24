@@ -63,7 +63,7 @@ public class SysManagerServiceImpl extends ServiceImpl<SysManagerMapper, SysMana
         return manager;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = MyException.class)
     @Override
     public ResultView updatePwd(String managerId, String oldPassWord, String passWord) {
         SysManager manager = getById(managerId);

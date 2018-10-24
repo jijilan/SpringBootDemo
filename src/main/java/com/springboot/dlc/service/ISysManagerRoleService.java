@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2018-10-02
  */
 public interface ISysManagerRoleService extends IService<SysManagerRole> {
+
     int setRoleByManager(String managerId, String[] roleIds);
 }
