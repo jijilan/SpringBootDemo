@@ -1,8 +1,6 @@
 package com.springboot.dlc.config;
 
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import com.springboot.dlc.result.ResultStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +14,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;

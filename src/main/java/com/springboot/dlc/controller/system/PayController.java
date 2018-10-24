@@ -7,6 +7,7 @@ import com.github.liujiebang.pay.ali.config.AliPayConfig;
 import com.github.liujiebang.pay.utils.IdentityUtil;
 import com.github.liujiebang.pay.utils.XMLUtil;
 import com.github.liujiebang.pay.wx.config.WxConfig;
+import com.github.liujiebang.pay.wx.entity.WxUserInfo;
 import com.github.liujiebang.pay.wx.service.WxPayService;
 import com.springboot.dlc.result.ResultStatus;
 import com.springboot.dlc.result.ResultView;
@@ -28,10 +29,6 @@ import java.util.*;
 @RestController
 public class PayController {
 
-
-    @Autowired
-    private WxPayService wxPayService;
-
     @Autowired
     private WxConfig wxConfig;
 
@@ -46,7 +43,6 @@ public class PayController {
      */
     @PostMapping(value = "/front/pay")
     public ResultView pay(HttpServletRequest request, String outTradeNo, String payType) {
-        //wxPayService.wxReturn()
         String userId = (String) request.getAttribute(ResultStatus.USER_ID);
         Map map = null;
         return ResultView.ok(map);

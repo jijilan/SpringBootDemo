@@ -1,15 +1,11 @@
 package com.springboot.dlc.controller.base;
 
-import com.springboot.dlc.exception.MyException;
 import com.springboot.dlc.jwt.JwtData;
 import com.springboot.dlc.jwt.JwtUtil;
 import com.springboot.dlc.redis.RedisService;
 import com.springboot.dlc.resources.WebResource;
-import com.springboot.dlc.result.ResultEnum;
 import com.springboot.dlc.result.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.RedisConnectionFailureException;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * @auther: liujiebang

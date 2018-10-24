@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -26,13 +27,13 @@ public class SysMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "主键编号不能为空")
+    @NotBlank(message = "主键编号不能为空")
     private String id;
 
     /**
      * 接口名称
      */
-    @NotEmpty(message = "权限名称名称不能为空")
+    @NotBlank(message = "权限名称名称不能为空")
     @TableField("interfaceName")
     private String interfaceName;
 
